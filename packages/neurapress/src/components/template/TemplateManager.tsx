@@ -1,16 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Button } from '../ui/button'
 import { Settings2, Download, Upload, Star, Plus } from 'lucide-react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { templates as defaultTemplates, type Template } from '@/config/wechat-templates'
-import { useLocalStorage } from '@/hooks/use-local-storage'
-import { cn } from '@/lib/utils'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Textarea } from '../ui/textarea'
+import { templates as defaultTemplates, type Template } from '../../config/wechat-templates'
+import { useLocalStorage } from '../../hooks/use-local-storage'
+import { cn } from '../../lib/utils'
 
 interface TemplateManagerProps {
   onTemplateChange: () => void

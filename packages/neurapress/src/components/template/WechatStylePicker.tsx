@@ -2,16 +2,16 @@
 
 import * as React from 'react'
 import { Check } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { templates } from '@/config/wechat-templates'
-import { Button } from "@/components/ui/button"
+} from "../ui/dialog"
+import { templates } from '../../config/wechat-templates'
+import { Button } from "../ui/button"
 
 interface WechatStylePickerProps {
   value?: string

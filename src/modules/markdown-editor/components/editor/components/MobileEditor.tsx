@@ -1,12 +1,12 @@
 'use client'
 
 import { type RefObject } from 'react'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@modules/markdown-editor/components/ui/tabs'
-import { Button } from '@modules/markdown-editor/components/ui/button'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../ui/tabs'
+import { Button } from '../../ui/button'
 import { Copy } from 'lucide-react'
 import { EditorPreview } from './EditorPreview'
 import { type PreviewSize } from '../constants'
-import { type CodeThemeId } from '@modules/markdown-editor/config/code-themes'
+import { type CodeThemeId } from '../../../config/code-themes'
 
 interface MobileEditorProps {
   textareaRef: RefObject<HTMLTextAreaElement>

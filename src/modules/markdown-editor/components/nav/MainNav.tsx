@@ -2,11 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { cn } from '@modules/markdown-editor/lib/utils'
-import { ThemeToggle } from '@modules/markdown-editor/components/theme-toggle'
-import { Logo } from '@modules/markdown-editor/components/icons/Logo'
+import { cn } from '../../lib/utils'
+import { ThemeToggle } from '../theme-toggle'
+import { Logo } from '../icons/Logo'
 import { Github } from 'lucide-react'
-import { Button } from '@modules/markdown-editor/components/ui/button'
+import { Button } from '../ui/button'
 
 const navigation = [
   { name: '微信公众号', href: '/wechat' },

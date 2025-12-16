@@ -3,9 +3,7 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { Loader2 } from 'lucide-react'
-import { Logo } from '@modules/markdown-editor/components/icons/Logo'
-import { AdBanner } from '@modules/markdown-editor/components/ui/AdBanner'
-import '@modules/markdown-editor/app/globals.css'
+import { AdBanner, Logo, Toaster } from '@modules/markdown-editor'
 
 const LoadingLogo = () => (
   <div className="h-full bg-background flex items-center justify-center">
@@ -24,10 +22,13 @@ const LoadingLogo = () => (
   </div>
 )
 
-const WechatEditor = dynamic(() => import('@modules/markdown-editor/components/editor/WechatEditor'), {
-  ssr: false,
-  loading: () => <LoadingLogo />
-})
+const WechatEditor = dynamic(
+  () => import('@modules/markdown-editor').then((module) => module.WechatEditor),
+  {
+    ssr: false,
+    loading: () => <LoadingLogo />,
+  },
+)
 
 export default function WechatPage() {
   return (
@@ -48,6 +49,7 @@ export default function WechatPage() {
           console.log('广告已关闭')
         }}
       />
+      <Toaster />
     </main>
   )
 }

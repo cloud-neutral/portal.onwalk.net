@@ -1,8 +1,8 @@
 'use client'
 
-import { codeThemes, type CodeThemeId } from '@modules/markdown-editor/config/code-themes'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@modules/markdown-editor/components/ui/select'
-import { Label } from '@modules/markdown-editor/components/ui/label'
+import { codeThemes, type CodeThemeId } from '../../config/code-themes'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
+import { Label } from '../ui/label'
 
 interface CodeThemeSelectorProps {
   value: CodeThemeId

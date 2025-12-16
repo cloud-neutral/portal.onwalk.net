@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { cn } from '@modules/markdown-editor/lib/utils'
-import { Button } from '@modules/markdown-editor/components/ui/button'
+import { cn } from '../lib/utils'
+import { Button } from './ui/button'
 import {
   Sheet,
   SheetContent,
@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@modules/markdown-editor/components/ui/sheet'
+} from './ui/sheet'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,12 +21,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@modules/markdown-editor/components/ui/alert-dialog"
-import { ScrollArea } from '@modules/markdown-editor/components/ui/scroll-area'
+} from './ui/alert-dialog'
+import { ScrollArea } from './ui/scroll-area'
 import { FileText, Trash2, Menu, Plus, Save, Edit2, Check } from 'lucide-react'
-import { useToast } from '@modules/markdown-editor/components/ui/use-toast'
-import { ToastAction } from '@modules/markdown-editor/components/ui/toast'
-import { Input } from '@modules/markdown-editor/components/ui/input'
+import { useToast } from './ui/use-toast'
+import { ToastAction } from './ui/toast'
+import { Input } from './ui/input'
 
 interface Article {
   id: string

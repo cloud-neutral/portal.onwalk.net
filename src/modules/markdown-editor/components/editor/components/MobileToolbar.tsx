@@ -1,6 +1,6 @@
 import { Copy, Save, Settings } from 'lucide-react'
-import { cn } from '@modules/markdown-editor/lib/utils'
-import { Sheet, SheetContent, SheetTrigger } from '@modules/markdown-editor/components/ui/sheet'
+import { cn } from '../../../lib/utils'
+import { Sheet, SheetContent, SheetTrigger } from '../../ui/sheet'
 import { WechatStylePicker } from '../../template/WechatStylePicker'
 
 interface MobileToolbarProps {

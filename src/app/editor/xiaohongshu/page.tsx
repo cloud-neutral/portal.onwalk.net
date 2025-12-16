@@ -1,6 +1,4 @@
-import '@modules/markdown-editor/app/globals.css'
-import XiaohongshuMarkdownEditor from '@modules/markdown-editor/components/editor/xiaohongshu/XiaohongshuMarkdownEditor'
-import { Toaster } from '@modules/markdown-editor/components/ui/toaster'
+import { Toaster, XiaohongshuMarkdownEditor } from '@modules/markdown-editor'
 
 export default function XiaohongshuPage() {
   return (

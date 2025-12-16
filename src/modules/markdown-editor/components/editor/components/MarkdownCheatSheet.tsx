@@ -5,8 +5,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@modules/markdown-editor/components/ui/dialog"
-import { Button } from "@modules/markdown-editor/components/ui/button"
+} from '../../ui/dialog'
+import { Button } from '../../ui/button'
 import { HelpCircle } from 'lucide-react'
 
 const cheatSheet = [

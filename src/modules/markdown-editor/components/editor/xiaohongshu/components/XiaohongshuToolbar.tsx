@@ -1,11 +1,11 @@
 'use client'
 
 import { Save, Copy, Palette, Image as ImageIcon, Settings, FileText } from 'lucide-react'
-import { Button } from '@modules/markdown-editor/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@modules/markdown-editor/components/ui/select'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@modules/markdown-editor/components/ui/dialog'
-import { Label } from '@modules/markdown-editor/components/ui/label'
-import { Logo } from '@modules/markdown-editor/components/icons/Logo'
+import { Button } from '../../../ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../../../ui/dialog'
+import { Label } from '../../../ui/label'
+import { Logo } from '../../../icons/Logo'
 import Link from 'next/link'
 import { 
   xiaohongshuTemplates, 

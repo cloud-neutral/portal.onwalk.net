@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@modules/markdown-editor/components/ui/dialog'
-import { Label } from '@modules/markdown-editor/components/ui/label'
-import { Input } from '@modules/markdown-editor/components/ui/input'
-import { Button } from '@modules/markdown-editor/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Label } from '../ui/label'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
 import { Settings } from 'lucide-react'
-import { type RendererOptions } from '@modules/markdown-editor/lib/markdown'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@modules/markdown-editor/components/ui/select'
+import { type RendererOptions } from '../../lib/markdown'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 const themeColors = [
   { name: '经典黑', value: '#1a1a1a' },

@@ -1,16 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@modules/markdown-editor/components/ui/dialog'
-import { Button } from '@modules/markdown-editor/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Button } from '../ui/button'
 import { Settings2, Download, Upload, Star, Plus } from 'lucide-react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@modules/markdown-editor/components/ui/tabs'
-import { Input } from '@modules/markdown-editor/components/ui/input'
-import { Label } from '@modules/markdown-editor/components/ui/label'
-import { Textarea } from '@modules/markdown-editor/components/ui/textarea'
-import { templates as defaultTemplates, type Template } from '@modules/markdown-editor/config/wechat-templates'
-import { useLocalStorage } from '@modules/markdown-editor/hooks/use-local-storage'
-import { cn } from '@modules/markdown-editor/lib/utils'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Textarea } from '../ui/textarea'
+import { templates as defaultTemplates, type Template } from '../../config/wechat-templates'
+import { useLocalStorage } from '../../hooks/use-local-storage'
+import { cn } from '../../lib/utils'
 
 interface TemplateManagerProps {
   onTemplateChange: () => void

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '@i18n/LanguageProvider'
-import { neurapressSample, renderMarkdown } from '@internal/neurapress'
+import { neurapressSample, renderMarkdown } from '@modules/markdown-editor'
 import type { DraftStore } from './storage'
 
 const defaultContent = `# 编辑器 / Editor

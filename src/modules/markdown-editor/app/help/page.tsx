@@ -1,7 +1,7 @@
-import { MainNav } from '@modules/markdown-editor/components/nav/MainNav'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@modules/markdown-editor/components/ui/card'
-import { Button } from '@modules/markdown-editor/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@modules/markdown-editor/components/ui/tabs'
+import { MainNav } from '../../components/nav/MainNav'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
+import { Button } from '../../components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs'
 import Link from 'next/link'
 import { 
   BookOpen,

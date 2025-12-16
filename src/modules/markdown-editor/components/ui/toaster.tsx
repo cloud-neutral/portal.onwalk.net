@@ -7,8 +7,8 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "@modules/markdown-editor/components/ui/toast"
-import { useToast } from "@modules/markdown-editor/components/ui/use-toast"
+} from './toast'
+import { useToast } from './use-toast'
 
 export function Toaster() {
   const { toasts } = useToast()

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import { TooltipProvider } from '@modules/markdown-editor/components/ui/tooltip'
+import { TooltipProvider } from '../../ui/tooltip'
 import { XiaohongshuToolbar } from './components/XiaohongshuToolbar'
 import { XiaohongshuEditor } from './components/XiaohongshuEditor'
 import { XiaohongshuPreview } from './components/XiaohongshuPreview'

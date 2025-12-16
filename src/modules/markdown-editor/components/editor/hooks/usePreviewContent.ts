@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from 'react'
-import { templates } from '@modules/markdown-editor/config/wechat-templates'
-import { convertToWechat, getCodeThemeStyles, type RendererOptions } from '@modules/markdown-editor/lib/markdown'
-import { type CodeThemeId } from '@modules/markdown-editor/config/code-themes'
-import { useToast } from '@modules/markdown-editor/components/ui/use-toast'
-import { initializeMermaid } from '@modules/markdown-editor/lib/markdown/mermaid-utils'
+import { templates } from '../../../config/wechat-templates'
+import { convertToWechat, getCodeThemeStyles, type RendererOptions } from '../../../lib/markdown'
+import { type CodeThemeId } from '../../../config/code-themes'
+import { useToast } from '../../ui/use-toast'
+import { initializeMermaid } from '../../../lib/markdown/mermaid-utils'
 
 interface UsePreviewContentProps {
   value: string

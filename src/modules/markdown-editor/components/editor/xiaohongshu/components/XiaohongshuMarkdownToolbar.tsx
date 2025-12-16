@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Button } from '@modules/markdown-editor/components/ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@modules/markdown-editor/components/ui/tooltip'
-import { Separator } from '@modules/markdown-editor/components/ui/separator'
+import { Button } from '../../../ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../../ui/tooltip'
+import { Separator } from '../../../ui/separator'
 import {
   Bold,
   Italic,

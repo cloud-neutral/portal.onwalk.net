@@ -20,20 +20,23 @@ interface WorkspaceGridProps {
   draggableHandle?: string
 }
 
-const ReactGridLayout = dynamic<ReactGridLayoutProps>(
+const ReactGridLayout = dynamic(
   () =>
     import('react-grid-layout').then(mod => {
       const baseComponent = mod.default
-      const widthProvider = mod.WidthProvider ?? mod.default?.WidthProvider
+      const widthProvider = (mod as any).WidthProvider ?? (mod.default as any)?.WidthProvider
 
-      if (!widthProvider) {
+      if (!widthProvider || !baseComponent) {
         throw new Error('Unable to load react-grid-layout WidthProvider')
       }
 
-      return widthProvider(baseComponent)
+      const WrappedGrid = (widthProvider as any)(baseComponent as any)
+      const Adapter: React.ComponentType<ReactGridLayoutProps> = props => <WrappedGrid {...props} />
+
+      return Adapter as React.ComponentType<ReactGridLayoutProps>
     }),
   { ssr: false }
-)
+) as React.ComponentType<ReactGridLayoutProps>
 
 export function WorkspaceGrid({
   layout,

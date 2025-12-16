@@ -1,10 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* 导入模板样式与代码高亮主题 */
 @import '../styles/templates/xiaohongshu.css';
 @import '../styles/code-themes.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {

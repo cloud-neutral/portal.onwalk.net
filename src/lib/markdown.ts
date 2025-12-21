@@ -85,14 +85,15 @@ export async function readMarkdownFile(
   const { metadata, content } = parseFrontMatter(raw)
   const htmlResult = await marked.parse(content)
   const html = typeof htmlResult === 'string' ? htmlResult : await htmlResult
-  const slug = path.basename(relativePath, path.extname(relativePath))
+  const withoutExtension = relativePath.replace(new RegExp(`${path.extname(relativePath)}$`), '')
+  const slug = withoutExtension.split(path.sep).join('/')
 
   return { metadata, content, html, slug }
 }
 
 export async function readMarkdownDirectory(
   relativeDir: string,
-  options?: { baseDir?: string }
+  options?: { baseDir?: string; recursive?: boolean }
 ): Promise<MarkdownFile[]> {
   const baseDir = options?.baseDir ?? CONTENT_ROOT
   const dirPath = path.join(baseDir, relativeDir)
@@ -104,5 +105,14 @@ export async function readMarkdownDirectory(
     files.map((file) => readMarkdownFile(path.join(relativeDir, file.name), { baseDir }))
   )
 
-  return results
+  if (!options?.recursive) {
+    return results
+  }
+
+  const nestedDirectories = entries.filter((entry) => entry.isDirectory())
+  const nestedResults = await Promise.all(
+    nestedDirectories.map((dir) => readMarkdownDirectory(path.join(relativeDir, dir.name), { baseDir, recursive: true }))
+  )
+
+  return results.concat(...nestedResults)
 }

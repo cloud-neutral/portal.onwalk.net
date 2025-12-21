@@ -1,3 +1,4 @@
+import fs from 'fs'
 import path from 'path'
 
 import { readMarkdownDirectory } from './markdown'
@@ -38,6 +39,10 @@ export interface HomepagePost {
   tags: string[]
   excerpt: string
   contentHtml: string
+  category?: {
+    key: string
+    label: string
+  }
 }
 
 export interface SidebarSection {
@@ -185,6 +190,39 @@ const CONTACT_PANEL: ContactPanelContent = {
 }
 
 const BLOG_CONTENT_ROOT = path.join(process.cwd(), 'src', 'content', 'blog')
+const KNOWLEDGE_CONTENT_ROOT = path.join(process.cwd(), 'content')
+
+const CATEGORY_MAP: { key: string; label: string; match: (segments: string[]) => boolean }[] = [
+  { key: 'infra-cloud', label: 'Infra & Cloud', match: (segments) => segments[0] === '04-infra-platform' },
+  { key: 'observability', label: 'Observability', match: (segments) => segments[0] === '03-observability' },
+  { key: 'identity', label: 'ID & Security', match: (segments) => segments[0] === '01-id-security' },
+  { key: 'iac-devops', label: 'IaC & DevOps', match: (segments) => segments[0] === '02-iac-devops' },
+  { key: 'data-ai', label: 'Data & AI', match: (segments) => segments[0] === '05-data-ai' },
+  {
+    key: 'insight',
+    label: '资讯',
+    match: (segments) => segments[0] === '00-global' && (!segments[1] || segments[1] === 'news' || segments[1] === 'workshops'),
+  },
+  {
+    key: 'essays',
+    label: '随笔&观察',
+    match: (segments) => segments[0] === '00-global' && segments[1] === 'essays',
+  },
+]
+
+export function resolveBlogContentRoot(): string {
+  if (fs.existsSync(KNOWLEDGE_CONTENT_ROOT)) {
+    return KNOWLEDGE_CONTENT_ROOT
+  }
+  return BLOG_CONTENT_ROOT
+}
+
+function resolveCategory(slug: string): { key: string; label: string } | undefined {
+  const segments = slug.split('/')
+  const matched = CATEGORY_MAP.find((category) => category.match(segments))
+
+  return matched ? { key: matched.key, label: matched.label } : undefined
+}
 
 function extractExcerpt(markdown: string): string {
   const blocks = markdown.split(/\r?\n\s*\r?\n/)
@@ -213,7 +251,8 @@ export async function getHeroSolutions(): Promise<HeroSolution[]> {
 export async function getHomepagePosts(): Promise<HomepagePost[]> {
   let posts: HomepagePost[] = []
   try {
-    const files = await readMarkdownDirectory('', { baseDir: BLOG_CONTENT_ROOT })
+    const contentRoot = resolveBlogContentRoot()
+    const files = await readMarkdownDirectory('', { baseDir: contentRoot, recursive: true })
 
     posts = files.map((file) => {
       const title = typeof file.metadata.title === 'string' ? file.metadata.title : file.slug
@@ -226,6 +265,7 @@ export async function getHomepagePosts(): Promise<HomepagePost[]> {
         : []
       const excerptMetadata = typeof file.metadata.excerpt === 'string' ? file.metadata.excerpt : undefined
       const excerpt = excerptMetadata ?? extractExcerpt(file.content)
+      const category = resolveCategory(file.slug)
 
       return {
         slug: file.slug,
@@ -236,6 +276,7 @@ export async function getHomepagePosts(): Promise<HomepagePost[]> {
         tags,
         excerpt,
         contentHtml: file.html,
+        category,
       }
     })
   } catch (error) {

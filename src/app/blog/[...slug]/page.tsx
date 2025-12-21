@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { readMarkdownFile } from '@lib/markdown'
+import { resolveBlogContentRoot } from '@lib/marketingContent'
 import type { Metadata } from 'next'
 
 type PageProps = {
-  params: { slug: string }
+  params: { slug: string | string[] }
 }
 
 function formatDate(dateStr: string, language: 'zh' | 'en'): string {
@@ -27,9 +28,10 @@ function formatDate(dateStr: string, language: 'zh' | 'en'): string {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
+  const slugPath = Array.isArray(slug) ? slug.join('/') : slug
   try {
-    const blogContentRoot = process.cwd() + '/src/content/blog'
-    const file = await readMarkdownFile(`${slug}.md`, { baseDir: blogContentRoot })
+    const blogContentRoot = resolveBlogContentRoot()
+    const file = await readMarkdownFile(`${slugPath}.md`, { baseDir: blogContentRoot })
 
     const title = file.metadata.title as string
     const excerpt = (file.metadata.excerpt as string) || ''
@@ -47,11 +49,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params
+  const slugPath = Array.isArray(slug) ? slug.join('/') : slug
   try {
-    const blogContentRoot = process.cwd() + '/src/content/blog'
-    const file = await readMarkdownFile(`${slug}.md`, { baseDir: blogContentRoot })
+    const blogContentRoot = resolveBlogContentRoot()
+    const file = await readMarkdownFile(`${slugPath}.md`, { baseDir: blogContentRoot })
 
-    const title = (file.metadata.title as string) || slug
+    const title = (file.metadata.title as string) || slugPath
     const author = file.metadata.author as string | undefined
     const date = file.metadata.date as string | undefined
     const tags = file.metadata.tags as string[] | undefined

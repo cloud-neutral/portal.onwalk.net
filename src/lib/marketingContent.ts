@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { readMarkdownDirectory } from './markdown'
+import { readMdxDirectory } from './mdx'
 
 export interface HeroContent {
   eyebrow?: string
@@ -38,7 +38,7 @@ export interface HomepagePost {
   readingTime?: string
   tags: string[]
   excerpt: string
-  contentHtml: string
+  content: string
   category?: {
     key: string
     label: string
@@ -225,7 +225,12 @@ function resolveCategory(slug: string): { key: string; label: string } | undefin
 }
 
 function extractExcerpt(markdown: string): string {
-  const blocks = markdown.split(/\r?\n\s*\r?\n/)
+  const cleaned = markdown
+    .replace(/^\s*import\s+.*$/gm, '')
+    .replace(/^\s*export\s+const\s+.*$/gm, '')
+    .trim()
+
+  const blocks = cleaned.split(/\r?\n\s*\r?\n/)
   for (const block of blocks) {
     const trimmed = block.trim()
     if (!trimmed) continue
@@ -252,7 +257,7 @@ export async function getHomepagePosts(): Promise<HomepagePost[]> {
   let posts: HomepagePost[] = []
   try {
     const contentRoot = resolveBlogContentRoot()
-    const files = await readMarkdownDirectory('', { baseDir: contentRoot, recursive: true })
+    const files = await readMdxDirectory('', { baseDir: contentRoot, recursive: true })
 
     posts = files.map((file) => {
       const title = typeof file.metadata.title === 'string' ? file.metadata.title : file.slug
@@ -275,7 +280,7 @@ export async function getHomepagePosts(): Promise<HomepagePost[]> {
         readingTime,
         tags,
         excerpt,
-        contentHtml: file.html,
+        content: file.content,
         category,
       }
     })

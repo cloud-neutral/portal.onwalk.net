@@ -17,6 +17,7 @@
     "jsx": "react-jsx",
     "baseUrl": ".",             // 👈 根路径基准
     "paths": {
+      "contentlayer/generated": ["./.contentlayer/generated"],
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@i18n/*": ["src/i18n/*"],

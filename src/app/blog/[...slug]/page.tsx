@@ -1,12 +1,11 @@
-export const dynamic = 'error'
-export const revalidate = false
+export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import type { Metadata } from 'next'
 
-import { getBlogPostBySlug, getBlogSlugs } from '@lib/blogContent'
+import { getBlogPostBySlug } from '@lib/blogContent'
 
 type PageProps = {
   params: { slug: string | string[] }
@@ -28,11 +27,6 @@ function formatDate(dateStr: string, language: 'zh' | 'en'): string {
     month: 'long',
     day: 'numeric',
   })
-}
-
-export async function generateStaticParams() {
-  const slugs = await getBlogSlugs()
-  return slugs.map((slug) => ({ slug: slug.split('/') }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

@@ -2,6 +2,7 @@ export const dynamic = 'error'
 export const revalidate = false
 
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 import BlogList from '@components/blog/BlogList'
 import { getBlogPosts } from '@lib/blogContent'
@@ -13,5 +14,9 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
   const posts = await getBlogPosts()
-  return <BlogList posts={posts} />
+  return (
+    <Suspense fallback={<div className="p-6 text-center">Loading blog content...</div>}>
+      <BlogList posts={posts} />
+    </Suspense>
+  )
 }

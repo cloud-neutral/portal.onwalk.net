@@ -31,7 +31,7 @@ export default async function CollectionPage({
     notFound()
   }
 
-  const defaultVersion = doc.versions.find((version) => version.id === doc.defaultVersionId) ?? doc.versions[0]
+  const defaultVersion = doc.versions.find((version) => version.slug === doc.defaultVersionSlug) ?? doc.versions[0]
   if (!defaultVersion) {
     notFound()
   }

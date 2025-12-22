@@ -6,52 +6,46 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
 import ClientTime from '../components/ClientTime'
-import type { DocCollection, DocVersionOption } from './types'
+import type { DocCollection } from './types'
 
 interface DocCollectionCardProps {
   collection: DocCollection
   meta?: string
 }
 
-function resolveVersionLabel(version?: DocVersionOption | null) {
-  return version?.label ?? 'Latest'
-}
-
 export default function DocCollectionCard({ collection, meta }: DocCollectionCardProps) {
   const { versions } = collection
-  const defaultVersionId = collection.defaultVersionId ?? versions[0]?.id ?? ''
-  const [selectedVersionId, setSelectedVersionId] = useState(defaultVersionId)
+  const defaultVersionSlug = collection.defaultVersionSlug ?? versions[0]?.slug ?? ''
+  const [selectedVersionSlug, setSelectedVersionSlug] = useState(defaultVersionSlug)
 
   useEffect(() => {
-    if (!defaultVersionId) {
+    if (!defaultVersionSlug) {
       return
     }
-    setSelectedVersionId(defaultVersionId)
-  }, [defaultVersionId, collection.slug])
+    setSelectedVersionSlug(defaultVersionSlug)
+  }, [defaultVersionSlug, collection.slug])
 
   useEffect(() => {
     if (!versions.length) {
       return
     }
-    if (!versions.some((version) => version.id === selectedVersionId)) {
-      const fallback = versions.find((version) => version.id === defaultVersionId) ?? versions[0]
+    if (!versions.some((version) => version.slug === selectedVersionSlug)) {
+      const fallback = versions.find((version) => version.slug === defaultVersionSlug) ?? versions[0]
       if (fallback) {
-        setSelectedVersionId(fallback.id)
+        setSelectedVersionSlug(fallback.slug)
       }
     }
-  }, [versions, selectedVersionId, defaultVersionId])
+  }, [versions, selectedVersionSlug, defaultVersionSlug])
 
   const activeVersion = useMemo(() => {
     if (!versions.length) return undefined
-    return versions.find((version) => version.id === selectedVersionId) ?? versions[0]
-  }, [versions, selectedVersionId])
+    return versions.find((version) => version.slug === selectedVersionSlug) ?? versions[0]
+  }, [versions, selectedVersionSlug])
 
-  const activeResource = activeVersion?.resource
-  const description = activeResource?.description ?? collection.description
+  const description = activeVersion?.description ?? collection.description
   const href = activeVersion ? `/docs/${collection.slug}/${activeVersion.slug}` : `/docs/${collection.slug}`
-  const updatedAt = activeResource?.updatedAt ?? collection.updatedAt
-  const estimatedMinutes = activeResource?.estimatedMinutes ?? collection.estimatedMinutes
-  const tags = activeResource?.tags?.length ? activeResource.tags : collection.tags
+  const updatedAt = activeVersion?.updatedAt ?? collection.updatedAt
+  const tags = activeVersion?.tags?.length ? activeVersion.tags : collection.tags
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-brand-border bg-white shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition duration-200 hover:-translate-y-1 hover:border-brand hover:shadow-[0_8px_28px_rgba(51,102,255,0.18)]">
@@ -70,7 +64,6 @@ export default function DocCollectionCard({ collection, meta }: DocCollectionCar
                 Updated <ClientTime isoString={updatedAt} />
               </span>
             )}
-            {estimatedMinutes && <span>{estimatedMinutes} min read</span>}
           </div>
         </div>
       </div>
@@ -85,12 +78,12 @@ export default function DocCollectionCard({ collection, meta }: DocCollectionCar
           <label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand-heading/70">
             <span>Version</span>
             <select
-              value={selectedVersionId}
-              onChange={(event) => setSelectedVersionId(event.target.value)}
+              value={selectedVersionSlug}
+              onChange={(event) => setSelectedVersionSlug(event.target.value)}
               className="rounded-full border border-brand-border px-3 py-1 text-sm font-medium text-brand-heading focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand/30"
             >
               {versions.map((version) => (
-                <option key={version.id} value={version.id}>
+                <option key={version.slug} value={version.slug}>
                   {version.label}
                 </option>
               ))}
@@ -112,7 +105,7 @@ export default function DocCollectionCard({ collection, meta }: DocCollectionCar
           <div className="flex flex-col text-brand-heading">
             <span>Open reader</span>
             {activeVersion && (
-              <span className="text-xs text-brand-heading/70">{resolveVersionLabel(activeVersion)}</span>
+              <span className="text-xs text-brand-heading/70">{activeVersion.label}</span>
             )}
           </div>
           <Link

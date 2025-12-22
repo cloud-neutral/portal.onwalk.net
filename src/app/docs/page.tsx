@@ -1,4 +1,5 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = 'error'
+export const revalidate = false
 
 import { notFound } from 'next/navigation'
 
@@ -9,13 +10,8 @@ import DocCollectionCard from './DocCollectionCard'
 
 function formatMeta(resource: DocCollection) {
   const parts: string[] = []
-  if (resource.category) {
-    parts.push(resource.category)
-  }
-  if (resource.latestVersionLabel) {
-    parts.push(resource.latestVersionLabel)
-  } else if (resource.latestVariant) {
-    parts.push(resource.latestVariant)
+  if (resource.updatedAt) {
+    parts.push('Updated')
   }
   if (resource.versions.length > 1) {
     parts.push(`${resource.versions.length} versions`)

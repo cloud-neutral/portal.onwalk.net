@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev --turbo",
-    "prebuild": "tsx ../scripts/export-slugs.ts && tsx ../scripts/scan-md.ts && tsx ../scripts/fetch-dl-index.ts && node ../scripts/copy-manifests.js && contentlayer build",
+    "prebuild": "tsx scripts/generate-content.ts && node scripts/build-contentlayer.mjs",
     "build": "next build",
     "build:static": "npm run prebuild && next build",
     "start": "node ./scripts/start.js",

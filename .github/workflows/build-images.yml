@@ -158,7 +158,7 @@ jobs:
   security:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ env.SKIP_SECURITY != 'true' }}
+    if: ${{ !((inputs.skip_security == true) || (github.event.inputs.skip_security == 'true')) }}
 
     strategy:
       matrix:
@@ -225,7 +225,7 @@ jobs:
     needs:
       - build
       - security
-    if: ${{ needs.build.result == 'success' && (env.SKIP_SECURITY == 'true' || needs.security.result == 'success') && (env.PUSH_IMAGES == 'true' || env.PUSH_IMAGES == true) }}
+    if: ${{ needs.build.result == 'success' && (github.event_name == 'push' || inputs.push_images == true || github.event.inputs.push_images == 'true') && ((inputs.skip_security == true) || (github.event.inputs.skip_security == 'true') || (needs.security.result == 'success')) }}
 
     strategy:
       fail-fast: false

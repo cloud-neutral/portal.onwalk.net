@@ -17,7 +17,6 @@ on:
         type: boolean
         default: false
 
-      # Base image references (full image URL)
       node_builder_image:
         type: string
         default: "node:22-bookworm"
@@ -63,11 +62,9 @@ env:
   ORG: cloud-neutral-toolkit
   SKIP_SECURITY: ${{ inputs.skip_security || github.event.inputs.skip_security || 'false' }}
 
-  # Base image references (tag or digest)
   NODE_BUILDER_IMAGE: ${{ inputs.node_builder_image || github.event.inputs.node_builder_image || 'node:22-bookworm' }}
   NODE_RUNTIME_IMAGE: ${{ inputs.node_runtime_image || github.event.inputs.node_runtime_image || 'node:22-slim' }}
 
-  # Push control
   PUSH_IMAGES: ${{ github.event_name == 'push'
     || (github.event_name == 'workflow_call'    && inputs.push_images)
     || (github.event_name == 'workflow_dispatch' && github.event.inputs.push_images == 'true') }}
@@ -76,65 +73,47 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    outputs:
-      dashboard-digest: ${{ steps.build.outputs.digest }}
-
     strategy:
       matrix:
         arch:
           - { platform: linux/amd64, artifact: linux-amd64 }
           - { platform: linux/arm64, artifact: linux-arm64 }
         service:
-          - { name: dashboard,  workdir: .,   dockerfile: Dockerfile }
+          - { name: dashboard, workdir: ., dockerfile: Dockerfile }
 
     steps:
-      # -------------------------------------------------------------
-      # Checkout source
-      # -------------------------------------------------------------
       - uses: actions/checkout@v4
 
-      # -------------------------------------------------------------
-      # Login to GHCR
-      # -------------------------------------------------------------
       - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # -------------------------------------------------------------
-      # Auto Tag
-      # -------------------------------------------------------------
       - name: Generate Auto Tags
         id: meta
         uses: ./.github/actions/auto-tag
         with:
           image: ${{ env.REGISTRY }}/${{ env.ORG }}/${{ matrix.service.name }}
 
-      # -------------------------------------------------------------
-      # Docker Buildx setup
-      # -------------------------------------------------------------
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
 
-      # -------------------------------------------------------------
-      # Checkout knowledge content for runtime mount
-      # -------------------------------------------------------------
       - name: Clone knowledge content
         run: git clone https://github.com/Cloud-Neutral-Workshop/knowledge.git knowledge
 
-      # -------------------------------------------------------------
-      # Build service image
-      # -------------------------------------------------------------
-      - name: Build Service Image
+      # ✅ 关键修正：每个矩阵 job 只 build 自己的平台，push 到“临时 tag”
+      - name: Build Service Image (per-arch)
         id: build
         uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.service.workdir }}
           file: ${{ matrix.service.dockerfile }}
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.arch.platform }}
           push: ${{ env.PUSH_IMAGES }}
-          tags: ${{ steps.meta.outputs.tags }}
+          # 临时 tag：避免并行 job 抢同一个 tag/manifest
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.ORG }}/${{ matrix.service.name }}:build-${{ github.sha }}-${{ matrix.arch.artifact }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             GO_RUNTIME_IMAGE=${{ env.GO_RUNTIME_IMAGE }}
@@ -142,18 +121,15 @@ jobs:
             NODE_RUNTIME_IMAGE=${{ env.NODE_RUNTIME_IMAGE }}
             CONTENTLAYER_BUILD=true
 
-      # -------------------------------------------------------------
-      # Record digest for downstream stages
-      # -------------------------------------------------------------
       - name: Record digest
         run: |
           set -euo pipefail
-          echo "${{ steps.build.outputs.digest }}" > digest-${{ matrix.arch.artifact }}.txt
+          echo "${{ steps.build.outputs.digest }}" > digest-${{ matrix.service.name }}-${{ matrix.arch.artifact }}.txt
 
       - uses: actions/upload-artifact@v4
         with:
-          name: digest-${{ matrix.arch.artifact }}
-          path: digest-${{ matrix.arch.artifact }}.txt
+          name: digest-${{ matrix.service.name }}-${{ matrix.arch.artifact }}
+          path: digest-${{ matrix.service.name }}-${{ matrix.arch.artifact }}.txt
 
   security:
     runs-on: ubuntu-latest
@@ -166,30 +142,29 @@ jobs:
           - { platform: linux/amd64, artifact: linux-amd64 }
           - { platform: linux/arm64, artifact: linux-arm64 }
         service:
-          - { name: dashboard,  workdir: .,   dockerfile: Dockerfile }
-          - { name: neurapress,  workdir: .,   dockerfile: packages/neurapress/docker/Dockerfile.prod }
+          - { name: dashboard }
 
     steps:
-      # -------------------------------------------------------------
-      # Checkout source
-      # -------------------------------------------------------------
       - uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v4
         with:
-          name: digest-${{ matrix.arch.artifact }}
+          name: digest-${{ matrix.service.name }}-${{ matrix.arch.artifact }}
 
       - name: Load image digest
         run: |
           set -euo pipefail
-          echo "IMAGE_DIGEST=$(cat digest-${{ matrix.arch.artifact }}.txt)" >> "$GITHUB_ENV"
+          echo "IMAGE_DIGEST=$(cat digest-${{ matrix.service.name }}-${{ matrix.arch.artifact }}.txt)" >> "$GITHUB_ENV"
 
-      # -------------------------------------------------------------
-      # SBOM Generation
-      # -------------------------------------------------------------
+      # ✅ 扫描/签名的对象：临时 tag + digest（确保指向该 arch 的镜像）
+      - name: Set image ref
+        run: |
+          set -euo pipefail
+          echo "IMG=${{ env.REGISTRY }}/${{ env.ORG }}/${{ matrix.service.name }}:build-${{ github.sha }}-${{ matrix.arch.artifact }}@${{ env.IMAGE_DIGEST }}" >> "$GITHUB_ENV"
+
       - uses: anchore/sbom-action@v0
         with:
-          image: ${{ env.REGISTRY }}/${{ env.ORG }}/${{ matrix.service.name }}@${{ env.IMAGE_DIGEST }}
+          image: ${{ env.IMG }}
           output-file: sbom.spdx.json
 
       - uses: actions/upload-artifact@v4
@@ -197,18 +172,12 @@ jobs:
           name: sbom-${{ matrix.service.name }}-${{ matrix.arch.artifact }}
           path: sbom.spdx.json
 
-      # -------------------------------------------------------------
-      # Trivy Vulnerability Scan
-      # -------------------------------------------------------------
       - uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.ORG }}/${{ matrix.service.name }}@${{ env.IMAGE_DIGEST }}
+          image-ref: ${{ env.IMG }}
           severity: HIGH,CRITICAL
           exit-code: '1'
 
-      # -------------------------------------------------------------
-      # Cosign Signing
-      # -------------------------------------------------------------
       - uses: sigstore/cosign-installer@v3
         with:
           cosign-release: 'v2.4.1'
@@ -217,8 +186,8 @@ jobs:
         env:
           COSIGN_EXPERIMENTAL: "true"
         run: |
-          IMG=${{ env.REGISTRY }}/${{ env.ORG }}/${{ matrix.service.name }}@${{ env.IMAGE_DIGEST }}
-          cosign sign --yes "$IMG"
+          set -euo pipefail
+          cosign sign --yes "${{ env.IMG }}"
 
   push:
     runs-on: ubuntu-latest
@@ -235,32 +204,31 @@ jobs:
           - docker.io
 
     steps:
-      # -------------------------------------------------------------
-      # Checkout source
-      # -------------------------------------------------------------
       - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      # 两个 arch digest 都要
+      - uses: actions/download-artifact@v4
+        with:
+          name: digest-dashboard-linux-amd64
 
       - uses: actions/download-artifact@v4
         with:
-          name: digest-linux-amd64
+          name: digest-dashboard-linux-arm64
 
-      - name: Load image digest
+      - name: Load digests
         run: |
           set -euo pipefail
-          echo "IMAGE_DIGEST=$(cat digest-linux-amd64.txt)" >> "$GITHUB_ENV"
+          echo "AMD_DIGEST=$(cat digest-dashboard-linux-amd64.txt)" >> "$GITHUB_ENV"
+          echo "ARM_DIGEST=$(cat digest-dashboard-linux-arm64.txt)" >> "$GITHUB_ENV"
 
-      # -------------------------------------------------------------
-      # Auto Tag
-      # -------------------------------------------------------------
       - name: Generate Auto Tags
         id: meta
         uses: ./.github/actions/auto-tag
         with:
           image: ${{ env.REGISTRY }}/${{ env.ORG }}/dashboard
 
-      # -------------------------------------------------------------
-      # Login to GHCR
-      # -------------------------------------------------------------
       - uses: docker/login-action@v3
         if: matrix.registry == 'ghcr.io'
         with:
@@ -268,45 +236,44 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # -------------------------------------------------------------
-      # Push image to GHCR
-      # -------------------------------------------------------------
-      - name: Push Service Image (GHCR)
+      # ✅ 关键修正：合并 manifest list，生成最终 tags（multi-arch）
+      - name: Create & Push Multi-Arch Manifests (GHCR)
         if: matrix.registry == 'ghcr.io'
         run: |
           set -euo pipefail
-          IMAGE="${{ env.REGISTRY }}/${{ env.ORG }}/dashboard"
-          docker pull "$IMAGE@${{ env.IMAGE_DIGEST }}"
+
+          SRC_AMD="${{ env.REGISTRY }}/${{ env.ORG }}/dashboard:build-${{ github.sha }}-linux-amd64@${{ env.AMD_DIGEST }}"
+          SRC_ARM="${{ env.REGISTRY }}/${{ env.ORG }}/dashboard:build-${{ github.sha }}-linux-arm64@${{ env.ARM_DIGEST }}"
+
+          FIRST_TAG=""
           echo "${{ steps.meta.outputs.tags }}" | tr ',' '\n' | while read -r TAG; do
             [ -z "$TAG" ] && continue
-            docker tag "$IMAGE@${{ env.IMAGE_DIGEST }}" "$TAG"
-            docker push "$TAG"
+            if [ -z "$FIRST_TAG" ]; then FIRST_TAG="$TAG"; fi
+            docker buildx imagetools create -t "$TAG" "$SRC_AMD" "$SRC_ARM"
           done
 
-      # -------------------------------------------------------------
-      # Checkout knowledge content for runtime mount
-      # -------------------------------------------------------------
+          # 取一个最终 tag 的 manifest digest，供后续验证/复制
+          # 选 tags 列表里的第一个
+          TAG1="$(echo "${{ steps.meta.outputs.tags }}" | tr ',' '\n' | head -n 1)"
+          DIGEST="$(docker buildx imagetools inspect "$TAG1" --format '{{.Digest}}')"
+          echo "MANIFEST_DIGEST=$DIGEST" >> "$GITHUB_ENV"
+          echo "FINAL_TAG=$TAG1" >> "$GITHUB_ENV"
+
       - name: Clone knowledge content
         if: matrix.registry == 'ghcr.io'
         run: git clone https://github.com/Cloud-Neutral-Workshop/knowledge.git knowledge
 
-      # -------------------------------------------------------------
-      # Validate runtime mount for blog content
-      # -------------------------------------------------------------
       - name: Validate blog content mount
         if: matrix.registry == 'ghcr.io'
         run: |
           set -euo pipefail
-          IMAGE="${{ env.REGISTRY }}/${{ env.ORG }}/dashboard@${{ env.IMAGE_DIGEST }}"
+          IMAGE="${{ env.REGISTRY }}/${{ env.ORG }}/dashboard@${{ env.MANIFEST_DIGEST }}"
           docker pull "$IMAGE"
           docker run --rm \
             -v "${{ github.workspace }}/knowledge/content:/app/dashboard/src/content/blog:ro" \
             "$IMAGE" \
             sh -c 'test -d /app/dashboard/src/content/blog'
 
-      # -------------------------------------------------------------
-      # Login to Docker Hub
-      # -------------------------------------------------------------
       - name: Login to Docker Hub
         if: matrix.registry == 'docker.io'
         uses: docker/login-action@v3
@@ -315,21 +282,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # -------------------------------------------------------------
-      # Re-tag & Push image to Docker Hub
-      # -------------------------------------------------------------
-      - name: Re-tag & Push Service Image (Docker Hub)
+      # ✅ 关键修正：用 skopeo 把 GHCR 的 multi-arch 镜像“原样复制”到 Docker Hub（不重建）
+      - name: Copy Multi-Arch Image to Docker Hub (skopeo)
         if: matrix.registry == 'docker.io'
         env:
           TARGET_NS: ${{ inputs.dockerhub_namespace || github.event.inputs.dockerhub_namespace || 'cloudneutral' }}
         run: |
           set -euo pipefail
 
-          SERVICE="dashboard"
-          ORIGIN_IMG="${{ env.REGISTRY }}/${{ env.ORG }}/${SERVICE}@${{ env.IMAGE_DIGEST }}"
-          TARGET_REPO="docker.io/${TARGET_NS}/${SERVICE}"
+          sudo apt-get update -y
+          sudo apt-get install -y skopeo
 
-          TAG="latest"
-          docker pull "$ORIGIN_IMG"
-          docker tag "$ORIGIN_IMG" "$TARGET_REPO:$TAG"
-          docker push "$TARGET_REPO:$TAG"
+          SRC="docker://ghcr.io/${{ env.ORG }}/dashboard@${{ env.MANIFEST_DIGEST }}"
+          DST="docker://docker.io/${TARGET_NS}/dashboard:latest"
+
+          # skopeo 使用独立登录（更稳定）
+          skopeo login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+          skopeo login docker.io -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
+
+          skopeo copy --all "$SRC" "$DST"

@@ -15,7 +15,7 @@ export default async function VideosPage() {
       <SiteHeader />
       <main className="mx-auto w-full max-w-6xl px-6 pb-20">
         <PageHeader variant="video" />
-        <VideoGrid items={videos} />
+        <VideoGrid items={videos} columns={3} />
       </main>
       <SiteFooter />
     </div>

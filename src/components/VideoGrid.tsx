@@ -9,8 +9,17 @@ import type { ContentItem } from '@/lib/content'
 const PAGE_SIZE = 12
 
 type VideoGridVariant = 'overview' | 'full'
+type VideoGridColumns = 2 | 3
 
-export default function VideoGrid({ items, variant = 'full' }: { items: ContentItem[]; variant?: VideoGridVariant }) {
+export default function VideoGrid({
+  items,
+  variant = 'full',
+  columns = 2,
+}: {
+  items: ContentItem[]
+  variant?: VideoGridVariant
+  columns?: VideoGridColumns
+}) {
   const copy = useOnwalkCopy()
   const videoItems: Array<ContentItem & { tone?: string }> =
     items.length > 0
@@ -64,7 +73,7 @@ export default function VideoGrid({ items, variant = 'full' }: { items: ContentI
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className={`grid gap-6 ${columns === 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2'}`}>
         {currentItems.map((item) => (
           <div
             key={item.slug}

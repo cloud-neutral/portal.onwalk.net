@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { ContentItem } from '@/lib/content'
 
 function buildExcerpt(content: string): string {
@@ -11,15 +12,28 @@ function buildExcerpt(content: string): string {
 
 export default function MasonryGrid({ posts }: { posts: ContentItem[] }) {
   return (
-    <div className="columns-1 gap-8 md:columns-2 lg:columns-3">
+    <div className="flex flex-col gap-4">
       {posts.map((post) => (
-        <article key={post.slug} className="mb-8 break-inside-avoid rounded-2xl border border-slate-200 bg-white p-4 text-slate-900 shadow-sm">
-          {post.cover && <img src={post.cover} alt={post.title ?? post.slug} className="mb-4 w-full rounded-xl object-cover" />}
-          <h3 className="text-lg font-semibold">{post.title}</h3>
-          {post.location && <p className="mt-1 text-xs text-slate-500">{post.location}</p>}
-          {post.content && <p className="mt-3 text-sm text-slate-600">{buildExcerpt(post.content)}...</p>}
-        </article>
+        <Link
+          key={post.slug}
+          href={`/blog/${post.slug}`}
+          className="rounded-xl border border-gray-100 bg-white p-5 transition hover:bg-[#f2f2f2]"
+        >
+          {post.date && <p className="text-xs text-[#747775]">{post.date}</p>}
+          <h3 className="mt-2 text-lg font-medium text-[#1f1f1f]">{post.title ?? post.slug}</h3>
+          {post.content && (
+            <p className="mt-3 text-sm leading-relaxed text-[#747775] line-clamp-2">
+              {buildExcerpt(post.content)}...
+            </p>
+          )}
+        </Link>
       ))}
+      <Link
+        href="/blog"
+        className="inline-flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-[#1f1f1f] transition hover:bg-[#f2f2f2]"
+      >
+        Read More
+      </Link>
     </div>
   )
 }

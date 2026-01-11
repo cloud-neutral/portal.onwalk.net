@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { ContentItem } from '@/lib/content'
 
 const blurDataURL =
@@ -6,29 +7,38 @@ const blurDataURL =
 
 export default function ImageCarousel({ items }: { items: ContentItem[] }) {
   return (
-    <div className="flex gap-6 overflow-x-auto pb-4">
+    <div className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
       {items.map((item) => (
-        <article
-          key={item.slug}
-          className="min-w-[260px] max-w-[320px] flex-shrink-0 rounded-2xl border border-slate-200 bg-white p-4 text-slate-900 shadow-sm"
-        >
-          {item.cover && (
-            <div className="overflow-hidden rounded-xl">
+        <article key={item.slug} className="flex-shrink-0 snap-start">
+          <div className="group relative h-[300px] w-[225px] overflow-hidden rounded-2xl border border-[#efefef] bg-white shadow-sm">
+            {item.cover ? (
               <Image
                 src={item.cover}
                 alt={item.title ?? item.slug}
-                width={800}
-                height={520}
-                className="h-52 w-full object-cover"
+                width={900}
+                height={1200}
+                sizes="225px"
+                className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                 placeholder="blur"
                 blurDataURL={blurDataURL}
               />
-            </div>
-          )}
-          <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
-          {item.equipment && <p className="mt-2 text-xs text-slate-500">{item.equipment}</p>}
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-sm text-[#747775]">暂无图片</div>
+            )}
+            {item.title && (
+              <div className="absolute inset-x-3 bottom-3 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-[#1f1f1f] backdrop-blur">
+                {item.title}
+              </div>
+            )}
+          </div>
         </article>
       ))}
+      <Link
+        href="/images"
+        className="flex h-[300px] w-[225px] flex-shrink-0 snap-start items-center justify-center rounded-2xl border border-[#efefef] bg-[#f0f2f5] text-sm font-medium text-[#1f1f1f] transition hover:bg-[#e8eaed]"
+      >
+        查看全部 →
+      </Link>
     </div>
   )
 }

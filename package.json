@@ -14,6 +14,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
+    "meta-index:to-md": "tsx scripts/meta-index-to-md.ts",
+    "mcp:meta-index": "tsx scripts/mcp/meta-index-server.ts",
     "preview": "next build && next start",
     "mcp:server": "tsx scripts/mcp-server.ts",
     "test": "vitest run --config tests/unit/vitest.config.ts",

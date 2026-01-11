@@ -48,7 +48,7 @@ export default async function HomePage() {
         <section className="space-y-6">
           <HomeSectionHeader section="video" />
           <div className="rounded-3xl border border-[#efefef] bg-white p-6 shadow-[0_4px_8px_rgba(0,0,0,0.04)]">
-            <VideoGrid items={video} variant="overview" />
+            <VideoGrid items={video} />
           </div>
         </section>
       </main>

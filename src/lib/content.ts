@@ -15,6 +15,7 @@ export type ContentItem = {
   src?: string
   equipment?: string
   location?: string | string[]
+  duration?: string
   category?: string
   content: string
 }

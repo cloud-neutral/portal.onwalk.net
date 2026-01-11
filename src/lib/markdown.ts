@@ -6,21 +6,21 @@ import { Readable } from 'stream'
 
 export type FrontMatterValue = string | string[]
 
-export interface MdxFile {
+export interface MarkdownFile {
   metadata: Record<string, FrontMatterValue>
   content: string
   raw: string
   slug: string
 }
 
-export type MdxSource =
+export type MarkdownSource =
   | { type: 'filesystem'; filePath: string }
   | { type: 'volume'; filePath: string }
   | { type: 'http'; url: string; headers?: Record<string, string> }
   | { type: 's3'; bucket: string; key: string; region?: string; client?: S3Client }
 
 const DEFAULT_CONTENT_ROOT = path.join(process.cwd(), 'src', 'content')
-const DEFAULT_EXTENSIONS = ['.mdx', '.md']
+const DEFAULT_EXTENSIONS = ['.md']
 
 async function streamToString(stream: Readable): Promise<string> {
   const chunks: Buffer[] = []
@@ -89,7 +89,7 @@ function normalizeMetadata(data: Record<string, unknown>): Record<string, FrontM
   }, {})
 }
 
-export async function loadMdxSource(source: MdxSource): Promise<string> {
+export async function loadMarkdownSource(source: MarkdownSource): Promise<string> {
   switch (source.type) {
     case 'filesystem':
     case 'volume': {
@@ -98,7 +98,7 @@ export async function loadMdxSource(source: MdxSource): Promise<string> {
     case 'http': {
       const response = await fetch(source.url, { headers: source.headers })
       if (!response.ok) {
-        throw new Error(`Failed to fetch MDX from ${source.url}: ${response.status} ${response.statusText}`)
+        throw new Error(`Failed to fetch Markdown from ${source.url}: ${response.status} ${response.statusText}`)
       }
       return response.text()
     }
@@ -108,7 +108,7 @@ export async function loadMdxSource(source: MdxSource): Promise<string> {
       return objectBodyToString(result.Body)
     }
     default:
-      throw new Error('Unsupported MDX source')
+      throw new Error('Unsupported Markdown source')
   }
 }
 
@@ -128,17 +128,17 @@ async function resolveFilePath(relativePath: string, baseDir: string, extensions
     }
   }
 
-  throw new Error(`MDX file not found at ${relativePath}`)
+  throw new Error(`Markdown file not found at ${relativePath}`)
 }
 
-export async function readMdxFile(
+export async function readMarkdownFile(
   relativePath: string,
   options?: { baseDir?: string; extensions?: string[] }
-): Promise<MdxFile> {
+): Promise<MarkdownFile> {
   const baseDir = options?.baseDir ?? DEFAULT_CONTENT_ROOT
   const extensions = options?.extensions ?? DEFAULT_EXTENSIONS
   const absolutePath = await resolveFilePath(relativePath, baseDir, extensions)
-  const raw = await loadMdxSource({ type: 'filesystem', filePath: absolutePath })
+  const raw = await loadMarkdownSource({ type: 'filesystem', filePath: absolutePath })
   const { data, content } = matter(raw)
   const normalizedPath = path.relative(baseDir, absolutePath)
   const withoutExtension = normalizedPath.replace(new RegExp(`${path.extname(normalizedPath)}$`), '')
@@ -152,10 +152,10 @@ export async function readMdxFile(
   }
 }
 
-export async function readMdxDirectory(
+export async function readMarkdownDirectory(
   relativeDir: string,
   options?: { baseDir?: string; recursive?: boolean; extensions?: string[] }
-): Promise<MdxFile[]> {
+): Promise<MarkdownFile[]> {
   const baseDir = options?.baseDir ?? DEFAULT_CONTENT_ROOT
   const extensions = options?.extensions ?? DEFAULT_EXTENSIONS
   const dirPath = path.isAbsolute(relativeDir) ? relativeDir : path.join(baseDir, relativeDir)
@@ -166,7 +166,7 @@ export async function readMdxDirectory(
   )
 
   const results = await Promise.all(
-    files.map((file) => readMdxFile(path.join(relativeDir, file.name), { baseDir, extensions }))
+    files.map((file) => readMarkdownFile(path.join(relativeDir, file.name), { baseDir, extensions }))
   )
 
   if (!options?.recursive) {
@@ -176,7 +176,7 @@ export async function readMdxDirectory(
   const nestedDirectories = entries.filter((entry) => entry.isDirectory())
   const nestedResults = await Promise.all(
     nestedDirectories.map((dir) =>
-      readMdxDirectory(path.join(relativeDir, dir.name), { baseDir, recursive: true, extensions })
+      readMarkdownDirectory(path.join(relativeDir, dir.name), { baseDir, recursive: true, extensions })
     )
   )
 

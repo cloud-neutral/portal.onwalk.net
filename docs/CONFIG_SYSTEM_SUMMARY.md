@@ -76,8 +76,8 @@ import typography from '@tailwindcss/typography'
 
 export default {
   content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,md}',
+    './app/**/*.{js,ts,jsx,tsx,md}',
   ],
   theme: { extend: {} },
   plugins: [typography]

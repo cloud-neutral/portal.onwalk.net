@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { readMdxDirectory } from './mdx'
+import { readMarkdownDirectory } from './markdown'
 
 export interface HeroContent {
   eyebrow?: string
@@ -201,7 +201,7 @@ const CATEGORY_MAP: { key: string; label: string; match: (segments: string[]) =>
   {
     key: 'insight',
     label: '资讯',
-    match: (segments) => segments[0] === '00-global' && (!segments[1] || segments[1] === 'news' || segments[1] === 'workshops'),
+    match: (segments) => segments[0] === '00-global' && (!segments[1] || segments[1] === 'news'),
   },
   {
     key: 'essays',
@@ -257,7 +257,7 @@ export async function getHomepagePosts(): Promise<HomepagePost[]> {
   let posts: HomepagePost[] = []
   try {
     const contentRoot = resolveBlogContentRoot()
-    const files = await readMdxDirectory('', { baseDir: contentRoot, recursive: true })
+    const files = await readMarkdownDirectory('', { baseDir: contentRoot, recursive: true })
 
     posts = files.map((file) => {
       const title = typeof file.metadata.title === 'string' ? file.metadata.title : file.slug

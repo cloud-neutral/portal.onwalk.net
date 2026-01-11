@@ -1091,7 +1091,7 @@ export const translations: Record<'en' | 'zh', Translation> = {
             author: 'Community Team',
             readingTime: '3 min read',
             excerpt:
-              'Join the eight-city tour for platform engineering case studies, security automation workshops, and open Q&A on the roadmap.',
+              'Join the eight-city tour for platform engineering case studies, security automation demos, and open Q&A on the roadmap.',
             tags: ['Community events', 'Ecosystem'],
           },
         },

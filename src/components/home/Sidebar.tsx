@@ -28,7 +28,7 @@ const sidebarContent = {
         title: '社区与支持',
         items: [
           { label: '发布说明', description: '版本更新、缺陷修复与补丁计划。', href: '#' },
-          { label: '社区日程', description: 'Workshop、Live Demo 与用户群活动。', href: '#' },
+          { label: '社区日程', description: 'Live Demo 与用户群活动。', href: '#' },
           { label: '加入讨论', description: '提交 Issue 或加入 Slack/微信群。', href: '#' },
         ],
       },
@@ -60,7 +60,7 @@ const sidebarContent = {
         title: 'Community & Support',
         items: [
           { label: 'Release Notes', description: 'Updates, fixes, and patch availability.', href: '#' },
-          { label: 'Community Calendar', description: 'Workshops, live demos, and user groups.', href: '#' },
+          { label: 'Community Calendar', description: 'Live demos and user groups.', href: '#' },
           { label: 'Join the Conversation', description: 'File issues or join Slack/WeChat.', href: '#' },
         ],
       },

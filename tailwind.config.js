@@ -10,9 +10,9 @@ import typography from '@tailwindcss/typography'
 export default {
   // 扫描的源文件路径
   content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,md}',
+    './app/**/*.{js,ts,jsx,tsx,md}',
+    './components/**/*.{js,ts,jsx,tsx,md}',
   ],
 
   // 主题扩展配置

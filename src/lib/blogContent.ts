@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import { cache } from 'react'
 
-import { readMdxDirectory, readMdxFile } from './mdx'
+import { readMarkdownDirectory, readMarkdownFile } from './markdown'
 import { resolveBlogContentRoot } from './marketingContent'
 
 export interface BlogPost {
@@ -25,7 +25,7 @@ export interface BlogCategory {
 
 export type BlogPostSummary = Omit<BlogPost, 'content'>
 
-const BLOG_EXTENSIONS = ['.md', '.mdx']
+const BLOG_EXTENSIONS = ['.md']
 
 const CATEGORY_MAP: { key: string; label: string; match: (segments: string[]) => boolean }[] = [
   { key: 'infra-cloud', label: 'Infra & Cloud', match: (segments) => segments[0] === '04-infra-platform' },
@@ -33,11 +33,10 @@ const CATEGORY_MAP: { key: string; label: string; match: (segments: string[]) =>
   { key: 'identity', label: 'ID & Security', match: (segments) => segments[0] === '01-id-security' },
   { key: 'iac-devops', label: 'IaC & DevOps', match: (segments) => segments[0] === '02-iac-devops' },
   { key: 'data-ai', label: 'Data & AI', match: (segments) => segments[0] === '05-data-ai' },
-  { key: 'workshops', label: 'Workshops', match: (segments) => segments[0] === '06-workshops' },
   {
     key: 'insight',
     label: '资讯',
-    match: (segments) => segments[0] === '00-global' && (!segments[1] || segments[1] === 'news' || segments[1] === 'workshops'),
+    match: (segments) => segments[0] === '00-global' && (!segments[1] || segments[1] === 'news'),
   },
   {
     key: 'essays',
@@ -53,11 +52,10 @@ const CATEGORY_DIRECTORIES: Record<string, { key: string; label: string }> = {
   '02-iac-devops': { key: 'iac-devops', label: 'IaC & DevOps' },
   '05-data-ai': { key: 'data-ai', label: 'Data & AI' },
   '00-global': { key: 'insight', label: '资讯' },
-  '06-workshops': { key: 'workshops', label: 'Workshops' },
 }
 
 const readBlogFiles = cache(async () =>
-  readMdxDirectory('', {
+  readMarkdownDirectory('', {
     baseDir: resolveBlogContentRoot(),
     recursive: true,
     extensions: BLOG_EXTENSIONS,
@@ -219,6 +217,6 @@ export async function getBlogSlugs(): Promise<string[]> {
 
 export async function loadBlogContent(slug: string): Promise<string> {
   const contentRoot = resolveBlogContentRoot()
-  const file = await readMdxFile(slug, { baseDir: contentRoot, extensions: BLOG_EXTENSIONS })
+  const file = await readMarkdownFile(slug, { baseDir: contentRoot, extensions: BLOG_EXTENSIONS })
   return file.content
 }

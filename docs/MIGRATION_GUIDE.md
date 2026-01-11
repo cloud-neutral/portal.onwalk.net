@@ -19,9 +19,9 @@ import typography from '@tailwindcss/typography'
 
 export default {
   content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,md}',
+    './app/**/*.{js,ts,jsx,tsx,md}',
+    './components/**/*.{js,ts,jsx,tsx,md}',
   ],
   theme: { extend: {} },
   plugins: [typography]
@@ -63,4 +63,3 @@ npm run build
 3. **静态分析**: IDE 支持更好
 4. **未来兼容**: ECMAScript 标准
 5. **性能提升**: 更好的模块加载
-

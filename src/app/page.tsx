@@ -26,30 +26,29 @@ export default async function HomePage() {
   ])
 
   return (
-    <div className="relative min-h-screen bg-slate-50 text-slate-900">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.18),transparent_35%),radial-gradient(circle_at_80%_0,rgba(253,224,71,0.18),transparent_30%),radial-gradient(circle_at_60%_70%,rgba(148,163,184,0.2),transparent_35%)]" aria-hidden />
+    <div className="relative min-h-screen bg-[#f9f9f9] text-[#1f1f1f]">
       <SiteHeader />
       <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 pb-24">
         <HomeHero />
 
         <section className="space-y-6">
           <HomeSectionHeader section="blog" />
-          <div className="rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_18px_40px_-32px_rgba(15,23,42,0.35)] backdrop-blur">
+          <div className="rounded-3xl border border-[#efefef] bg-white p-6 shadow-[0_4px_8px_rgba(0,0,0,0.04)]">
             <MasonryGrid posts={walk} />
           </div>
         </section>
 
         <section className="space-y-6">
           <HomeSectionHeader section="image" />
-          <div className="rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_18px_40px_-32px_rgba(15,23,42,0.35)] backdrop-blur">
+          <div className="rounded-3xl border border-[#efefef] bg-white p-6 shadow-[0_4px_8px_rgba(0,0,0,0.04)]">
             <ImageCarousel items={image} />
           </div>
         </section>
 
         <section className="space-y-6">
           <HomeSectionHeader section="video" />
-          <div className="rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_18px_40px_-32px_rgba(15,23,42,0.35)] backdrop-blur">
-            <VideoGrid items={video} />
+          <div className="rounded-3xl border border-[#efefef] bg-white p-6 shadow-[0_4px_8px_rgba(0,0,0,0.04)]">
+            <VideoGrid items={video} variant="overview" />
           </div>
         </section>
       </main>

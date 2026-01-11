@@ -10,8 +10,8 @@ export default function HomeSectionHeader({ section }: { section: HomeSectionKey
 
   return (
     <div className="flex flex-wrap items-end justify-between gap-2">
-      <h2 className="text-xl font-semibold">{data.title}</h2>
-      <span className="text-xs text-slate-500">{data.subtitle}</span>
+      <h2 className="text-xl font-medium text-[#1f1f1f]">{data.title}</h2>
+      <span className="text-xs text-[#747775]">{data.subtitle}</span>
     </div>
   )
 }

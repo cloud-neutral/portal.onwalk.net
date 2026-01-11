@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 import WorkshopArticle from '@/components/workshop/WorkshopArticle'
+import { onwalkSeoDescription, onwalkSeoTitle } from '@/lib/seo'
 import { allWorkshops } from 'contentlayer/generated'
 
 export const generateStaticParams = async () => allWorkshops.map((workshop) => ({ slug: workshop.slug }))
@@ -16,11 +17,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const workshop = allWorkshops.find((entry) => entry.slug === params.slug)
   if (!workshop) {
-    return { title: 'Workshop | Cloud-Neutral' }
+    return {
+      title: onwalkSeoTitle,
+      description: onwalkSeoDescription,
+    }
   }
   return {
-    title: `${workshop.title} | Workshop`,
-    description: workshop.summary,
+    title: `${workshop.title} | www.onwalk.net`,
+    description: workshop.summary || onwalkSeoDescription,
   }
 }
 

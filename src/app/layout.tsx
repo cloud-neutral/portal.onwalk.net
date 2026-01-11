@@ -4,12 +4,11 @@ import './globals.css'
 import { AppProviders } from './AppProviders'
 import Script from 'next/script'
 import { Analytics } from './Analytics'
+import { onwalkSeoDescription, onwalkSeoTitle } from '@/lib/seo'
 
 export const metadata = {
-  title:
-    '摄影 | 户外 | 航拍 | 富士 GFX | 大疆无人机 个人主页 | www.onwalk.net | Photography | Outdoor | Aerial | Fujifilm GFX | DJI Drone Personal Homepage | www.onwalk.net',
-  description:
-    '摄影 | 户外 | 航拍 | 富士 GFX | 大疆无人机 个人主页 | www.onwalk.net | Photography | Outdoor | Aerial | Fujifilm GFX | DJI Drone Personal Homepage | www.onwalk.net',
+  title: onwalkSeoTitle,
+  description: onwalkSeoDescription,
 }
 
 const GA_ID = 'G-Z621W698Q6'

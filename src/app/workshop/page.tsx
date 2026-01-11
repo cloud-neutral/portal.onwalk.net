@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
 
 import WorkshopCard from '@/components/workshop/WorkshopCard'
+import { onwalkSeoDescription, onwalkSeoTitle } from '@/lib/seo'
 import { allWorkshops } from 'contentlayer/generated'
 
 export const dynamic = 'error'
 export const revalidate = false
 
 export const metadata: Metadata = {
-  title: 'Workshops | Cloud-Neutral',
-  description: 'Hands-on, short-lived experiments built with MDX and Contentlayer.',
+  title: onwalkSeoTitle,
+  description: onwalkSeoDescription,
 }
 
 export default function WorkshopIndexPage() {

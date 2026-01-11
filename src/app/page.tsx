@@ -1,10 +1,12 @@
 export const dynamic = 'error'
 export const revalidate = false
 
+import { onwalkSeoDescription, onwalkSeoTitle } from '@/lib/seo'
+
 export const metadata = {
   title: 'Onwalk — Walking with a Camera',
   description:
-    'Street photography and walking notes from cities. Light, distance, and quiet moments.',
+    '一个关于行走与摄影的个人长期项目。记录城市、户外与被忽略的空间细节。 A long-term personal project on walking and photography. Cities, outdoors, and overlooked details.',
 }
 
 import ImageCarousel from '@/components/ImageCarousel'

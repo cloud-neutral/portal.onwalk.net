@@ -1,6 +1,12 @@
 export const dynamic = 'error'
 export const revalidate = false
 
+export const metadata = {
+  title: 'Onwalk — Walking with a Camera',
+  description:
+    'Street photography and walking notes from cities. Light, distance, and quiet moments.',
+}
+
 import ImageCarousel from '@/components/ImageCarousel'
 import MasonryGrid from '@/components/MasonryGrid'
 import SiteFooter from '@/components/SiteFooter'

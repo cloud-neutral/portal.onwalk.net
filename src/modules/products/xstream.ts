@@ -40,7 +40,7 @@ const xstream: ProductConfig = {
   docsQuickstart: 'https://github.com/Cloud-Neutral/Xstream#readme',
   docsApi: 'https://github.com/Cloud-Neutral/Xstream/tree/main/docs',
   docsIssues: 'https://github.com/Cloud-Neutral/Xstream/issues',
-  blogUrl: 'https://www.svc.plus/blog',
+  blogUrl: 'https://www.svc.plus/blogs',
   videosUrl: 'https://www.svc.plus/videos',
   downloadUrl: 'https://github.com/Cloud-Neutral/Xstream/releases',
   editions: {

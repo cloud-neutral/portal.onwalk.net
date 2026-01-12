@@ -11,7 +11,7 @@ import { AskAIButton } from './AskAIButton'
 export default function Navbar() {
   const pathname = usePathname()
   const isHiddenRoute = pathname
-    ? ['/xstream', '/xcloudflow', '/xscopehub', '/blog'].some((prefix) =>
+    ? ['/xstream', '/xcloudflow', '/xscopehub', '/blogs'].some((prefix) =>
         pathname.startsWith(prefix),
       )
     : false
@@ -61,7 +61,7 @@ export default function Navbar() {
     { key: 'home', label: labels.home, href: '/' },
   ]
 
-  const downloadLink = { key: 'blog', label: labels.download, href: '/blog' }
+  const downloadLink = { key: 'blog', label: labels.download, href: '/blogs' }
 
   const editorLink = {
     key: 'editor',

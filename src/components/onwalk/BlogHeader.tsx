@@ -18,9 +18,9 @@ export default function BlogHeader({ variant, activeHref }: { variant: BlogHeade
 
   const header = headerMap[variant]
   const navItems = [
-    { label: copy.blog.categories.tracks, href: '/blog/Tracks' },
-    { label: copy.blog.categories.city, href: '/blog/City' },
-    { label: copy.blog.categories.scenery, href: '/blog/Scenery' },
+    { label: copy.blog.categories.tracks, href: '/blogs/Tracks' },
+    { label: copy.blog.categories.city, href: '/blogs/City' },
+    { label: copy.blog.categories.scenery, href: '/blogs/Scenery' },
   ]
 
   return (

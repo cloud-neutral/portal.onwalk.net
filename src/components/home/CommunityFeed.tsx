@@ -71,7 +71,7 @@ export default function CommunityFeed({ posts = [] }: CommunityFeedProps) {
               </h2>
               <p className="text-sm text-slate-600 sm:text-base">{data.subtitle}</p>
             </div>
-            <Link href="/blog" className="text-sm font-semibold text-[#3467e9] hover:text-[#2957cf]">
+            <Link href="/blogs" className="text-sm font-semibold text-[#3467e9] hover:text-[#2957cf]">
               {data.cta} →
             </Link>
           </div>
@@ -91,7 +91,7 @@ export default function CommunityFeed({ posts = [] }: CommunityFeedProps) {
               <div className="mt-3 space-y-2">
                 <h3 className="text-lg font-semibold text-slate-900">
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={`/blogs/${post.slug}`}
                     className="hover:text-slate-900"
                   >
                     {post.title}
@@ -105,7 +105,7 @@ export default function CommunityFeed({ posts = [] }: CommunityFeedProps) {
                 )}
               </div>
               <Link
-                href={`/blog/${post.slug}`}
+                href={`/blogs/${post.slug}`}
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#3467e9] hover:text-[#2957cf]"
               >
                 {language === 'zh' ? '查看详情' : 'View details'}

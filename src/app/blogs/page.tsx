@@ -29,7 +29,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <SiteHeader />
       <main className="mx-auto w-full max-w-6xl px-6 pb-20">
-        <BlogHeader variant="overview" activeHref="/blog" />
+        <BlogHeader variant="overview" activeHref="/blogs" />
         <div className="grid gap-6 md:grid-cols-2">
           {pagedPosts.map((post) => (
             <PostCard key={post.slug} post={post} />
@@ -43,7 +43,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
             <div className="flex items-center gap-3">
               {currentPage > 1 && (
                 <Link
-                  href={`/blog?page=${currentPage - 1}`}
+                  href={`/blogs?page=${currentPage - 1}`}
                   className="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 transition hover:bg-slate-50"
                 >
                   Previous
@@ -51,7 +51,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
               )}
               {currentPage < totalPages && (
                 <Link
-                  href={`/blog?page=${currentPage + 1}`}
+                  href={`/blogs?page=${currentPage + 1}`}
                   className="rounded-full border border-slate-200 bg-white px-4 py-2 text-slate-700 transition hover:bg-slate-50"
                 >
                   Next

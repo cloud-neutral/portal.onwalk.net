@@ -12,7 +12,7 @@ export default function SiteHeader() {
     { label: copy.header.nav.home, href: '/' },
     { label: copy.header.nav.image, href: '/images' },
     { label: copy.header.nav.video, href: '/videos' },
-    { label: copy.header.nav.blog, href: '/blog' },
+    { label: copy.header.nav.blog, href: '/blogs' },
     { label: copy.header.nav.about, href: '/about' },
   ]
 

@@ -13,7 +13,7 @@ import {
   ShieldCheck,
 } from 'lucide-react'
 
-import type { ProductConfig } from '@src/products/registry'
+import type { ProductConfig } from '@modules/products/registry'
 
 type ProductFeaturesProps = {
   config: ProductConfig

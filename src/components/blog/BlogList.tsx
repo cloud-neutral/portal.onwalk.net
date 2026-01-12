@@ -118,7 +118,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
               return (
                 <Link
                   key={tab.key}
-                  href={`/blog${isActive ? '' : `?category=${tab.key}`}`}
+                  href={`/blogs${isActive ? '' : `?category=${tab.key}`}`}
                   className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
                     isActive
                       ? 'border-brand bg-brand text-white shadow-sm'
@@ -140,7 +140,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
               )
             })}
             <Link
-              href="/blog"
+              href="/blogs"
               className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
                 !selectedCategory
                   ? 'border-brand bg-brand text-white shadow-sm'
@@ -191,7 +191,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                         </div>
                       )}
                       <Link
-                        href={`/blog/${post.slug}`}
+                        href={`/blogs/${post.slug}`}
                         className="ml-auto text-sm font-semibold text-brand transition hover:text-brand-dark"
                       >
                         Read more →
@@ -204,7 +204,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
               {totalPages > 1 && (
                 <nav className="mt-12 flex items-center justify-center gap-2">
                   <Link
-                    href={`/blog?page=${Math.max(1, currentPage - 1)}${selectedCategory ? `&category=${selectedCategory}` : ''}`}
+                    href={`/blogs?page=${Math.max(1, currentPage - 1)}${selectedCategory ? `&category=${selectedCategory}` : ''}`}
                     className={`px-4 py-2 text-sm font-semibold rounded-lg transition ${
                       currentPage === 1
                         ? 'cursor-not-allowed text-slate-400'
@@ -218,7 +218,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
                     <Link
                       key={pageNumber}
-                      href={`/blog?page=${pageNumber}${selectedCategory ? `&category=${selectedCategory}` : ''}`}
+                      href={`/blogs?page=${pageNumber}${selectedCategory ? `&category=${selectedCategory}` : ''}`}
                       className={`px-4 py-2 text-sm font-semibold rounded-lg transition ${
                         pageNumber === currentPage
                           ? 'bg-brand text-white'
@@ -230,7 +230,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                   ))}
 
                   <Link
-                    href={`/blog?page=${Math.min(totalPages, currentPage + 1)}${
+                    href={`/blogs?page=${Math.min(totalPages, currentPage + 1)}${
                       selectedCategory ? `&category=${selectedCategory}` : ''
                     }`}
                     className={`px-4 py-2 text-sm font-semibold rounded-lg transition ${

@@ -43,7 +43,7 @@ export default function MasonryGrid({ posts }: { posts: ContentItem[] }) {
       {postItems.map((post) => (
         <Link
           key={post.slug}
-          href={`/blog/${post.slug}`}
+          href={`/blogs/${post.slug}`}
           className="block rounded-xl border border-gray-100 bg-white p-4 transition hover:bg-[#f2f2f2]"
         >
           <div className="space-y-2">
@@ -58,7 +58,7 @@ export default function MasonryGrid({ posts }: { posts: ContentItem[] }) {
         </Link>
       ))}
       <Link
-        href="/blog"
+        href="/blogs"
         className="flex w-full items-center justify-center rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-[#1f1f1f] transition hover:border-gray-400"
       >
         Read More

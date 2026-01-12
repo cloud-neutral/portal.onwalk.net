@@ -40,7 +40,7 @@ const xcloudflow: ProductConfig = {
   docsQuickstart: 'https://www.svc.plus/xcloudflow/docs/quickstart',
   docsApi: 'https://www.svc.plus/xcloudflow/docs/api',
   docsIssues: 'https://github.com/Cloud-Neutral/XCloudFlow/issues',
-  blogUrl: 'https://www.svc.plus/blog/tags/xcloudflow',
+  blogUrl: 'https://www.svc.plus/blogs/tags/xcloudflow',
   videosUrl: 'https://www.svc.plus/videos/xcloudflow',
   downloadUrl: 'https://www.svc.plus/xcloudflow/downloads',
   editions: {

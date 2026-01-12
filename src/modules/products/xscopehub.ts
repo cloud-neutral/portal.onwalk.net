@@ -40,7 +40,7 @@ const xscopehub: ProductConfig = {
   docsQuickstart: 'https://www.svc.plus/xscopehub/docs/quickstart',
   docsApi: 'https://www.svc.plus/xscopehub/docs/api',
   docsIssues: 'https://github.com/Cloud-Neutral/XScopeHub/issues',
-  blogUrl: 'https://www.svc.plus/blog/tags/xscopehub',
+  blogUrl: 'https://www.svc.plus/blogs/tags/xscopehub',
   videosUrl: 'https://www.svc.plus/videos/xscopehub',
   downloadUrl: 'https://www.svc.plus/xscopehub/downloads',
   editions: {

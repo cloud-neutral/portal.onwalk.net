@@ -13,7 +13,7 @@ export default async function SceneryPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <SiteHeader />
       <main className="mx-auto w-full max-w-6xl px-6 pb-20">
-        <BlogHeader variant="scenery" activeHref="/blog/Scenery" />
+        <BlogHeader variant="scenery" activeHref="/blogs/Scenery" />
         <div className="grid gap-6 md:grid-cols-2">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />

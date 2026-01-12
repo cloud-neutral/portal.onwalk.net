@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { BookOpen, Download, QrCode } from 'lucide-react'
 
-import type { ProductConfig } from '@src/products/registry'
+import type { ProductConfig } from '@modules/products/registry'
 import Hero from '@components/Hero'
 
 type ProductHeroProps = {

@@ -2,7 +2,7 @@ import { Github, MessageCircle, Newspaper, PlayCircle, QrCode } from 'lucide-rea
 import Link from 'next/link'
 import { forwardRef } from 'react'
 
-import type { ProductConfig } from '@src/products/registry'
+import type { ProductConfig } from '@modules/products/registry'
 
 type ProductCommunityProps = {
   config: ProductConfig

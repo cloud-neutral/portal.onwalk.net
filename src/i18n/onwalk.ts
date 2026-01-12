@@ -155,11 +155,12 @@ export const onwalkCopy: Record<Language, OnwalkCopy> = {
     },
     about: {
       eyebrow: '关于',
-      title: '影像与方法论',
-      subtitle: '写给未来的自己，也写给同行者。',
+      title: '',
+      subtitle: '写给自己，也写给对世间充满热爱且好奇的每一位过客。',
       paragraphs: [
-        '我把影像当作一种长期笔记，用镜头记录城市与山野的纹理，并用文字给予它们持续生长的结构。',
-        '这不是一次性的项目，而是可以长期积累的档案。照片是入口，文字是脊梁，愿它们一起陪我走得更远。',
+        '我把影像当作一种长期的笔记。用镜头记录城市与山野的纹理，用文字为它们提供持续生长的结构。',
+        '这不是一次性的项目，也不是为了完成而存在的作品集。它更像一份不断累积的档案：照片是入口，文字是脊梁；在漫长的行走与宏大的风景之间，记录那些比终点更重要的——属于个人的孤独、节奏与心境。',
+        '这里所呈现的，是我在过去十余年里不断行走、停留、回望所留下的痕迹。它们不追求即时的回应，而更接近一种缓慢成形的记忆——既关于世界如何被看见，也关于我如何在时间中逐渐成为自己。',
       ],
     },
     blog: {
@@ -259,11 +260,12 @@ export const onwalkCopy: Record<Language, OnwalkCopy> = {
     },
     about: {
       eyebrow: 'About',
-      title: 'Images & Method',
-      subtitle: 'Written for my future self and fellow travelers.',
+      title: '',
+      subtitle: 'Written for myself, and for every passerby who is full of love for the world and curiosity.',
       paragraphs: [
-        'I treat images as long-term notes, recording the texture of cities and wilds with the lens, and letting words give them a lasting structure.',
-        'This is not a one-off project but an archive that can keep growing. Photos are the entry, words the spine—may they take me farther.',
+        'I treat images as a form of long-term notes. Through the lens, I record the textures of cities and landscapes; through words, I give them a structure that can continue to grow.',
+        'This is not a one-off project, nor a portfolio built for completion. It is an archive in constant accumulation: photographs serve as entry points, text forms the spine. Between long walks and vast landscapes, it preserves what matters more than destinations—personal solitude, rhythm, and states of mind.',
+        'What you see here is the trace of more than a decade of walking, pausing, and looking back. These works do not seek immediate response; they resemble memories slowly taking shape—about how the world is seen, and how I have gradually become myself over time.',
       ],
     },
     blog: {

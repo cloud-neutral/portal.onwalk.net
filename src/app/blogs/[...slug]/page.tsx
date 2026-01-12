@@ -45,10 +45,33 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound()
   }
 
+  const baseUrl = 'https://www.onwalk.net'
+  const canonicalUrl = `${baseUrl}/blogs/${slugPath}`
+  const imageUrl = post.cover ? `${baseUrl}${post.cover}` : undefined
+  const description = post.content?.slice(0, 160)
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title ?? '行摄笔记',
+    datePublished: post.date,
+    dateModified: post.date,
+    description,
+    image: imageUrl ? [imageUrl] : undefined,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
+    },
+    url: canonicalUrl,
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <SiteHeader />
       <main className="mx-auto w-full max-w-3xl px-6 pb-20">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <BlogBackLink />
         <header className="mt-6 space-y-3">
           <h1 className="text-3xl font-semibold">{post.title}</h1>

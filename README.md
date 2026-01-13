@@ -39,6 +39,15 @@ The site is designed to remain usable even without a traditional backend service
 
 ---
 
+## Development
+
+`npm run dev` now boots the local MCP dependencies first (Chrome remote debugging
+plus the chrome-devtools MCP bridge), then starts the Next.js dev server.
+
+If you need a plain Next.js dev server without MCP, use `npm run dev:raw`.
+
+---
+
 ## Content Philosophy
 
 - Text and images are treated as long-term assets

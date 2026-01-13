@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
+import { unstable_cache } from 'next/cache'
+
 import type { ContentItem } from '@/lib/content'
 
 const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif'])
@@ -44,34 +46,40 @@ async function listFilesByMtime(
   }
 }
 
-export async function getLatestPublicImages(limit: number): Promise<ContentItem[]> {
-  const files = await listFilesByMtime(PUBLIC_IMAGES_DIR, (name) =>
-    IMAGE_EXTENSIONS.has(path.extname(name).toLowerCase()),
-  )
+export const getLatestPublicImages = unstable_cache(
+  async (limit: number): Promise<ContentItem[]> => {
+    const files = await listFilesByMtime(PUBLIC_IMAGES_DIR, (name) =>
+      IMAGE_EXTENSIONS.has(path.extname(name).toLowerCase()),
+    )
 
-  return files.slice(0, limit).map((file, index) => {
-    const slug = file.name.replace(/\.[^.]+$/, '')
-    const title = slugToTitle(slug)
-    return {
-      slug,
-      title: title || `Image ${index + 1}`,
-      cover: `/images/${file.name}`,
-      content: '',
-    }
-  })
-}
+    return files.slice(0, limit).map((file, index) => {
+      const slug = file.name.replace(/\.[^.]+$/, '')
+      const title = slugToTitle(slug)
+      return {
+        slug,
+        title: title || `Image ${index + 1}`,
+        cover: `/images/${file.name}`,
+        content: '',
+      }
+    })
+  },
+  ['latest-public-images'],
+)
 
-export async function getLatestPublicVideos(limit: number): Promise<ContentItem[]> {
-  const files = await listFilesByMtime(PUBLIC_VIDEOS_DIR, (name) => name.toLowerCase().endsWith('.mp4'))
+export const getLatestPublicVideos = unstable_cache(
+  async (limit: number): Promise<ContentItem[]> => {
+    const files = await listFilesByMtime(PUBLIC_VIDEOS_DIR, (name) => name.toLowerCase().endsWith('.mp4'))
 
-  return files.slice(0, limit).map((file, index) => {
-    const slug = file.name.replace(/\.mp4$/i, '')
-    const title = slugToTitle(slug)
-    return {
-      slug,
-      title: title || `Video ${index + 1}`,
-      src: `/videos/${file.name}`,
-      content: '',
-    }
-  })
-}
+    return files.slice(0, limit).map((file, index) => {
+      const slug = file.name.replace(/\.mp4$/i, '')
+      const title = slugToTitle(slug)
+      return {
+        slug,
+        title: title || `Video ${index + 1}`,
+        src: `/videos/${file.name}`,
+        content: '',
+      }
+    })
+  },
+  ['latest-public-videos'],
+)

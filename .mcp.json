@@ -3,6 +3,14 @@
     "next-devtools": {
       "command": "npx",
       "args": ["-y", "next-devtools-mcp@latest"]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "env": {
+        "CHROME_DEBUGGING_HOST": "127.0.0.1",
+        "CHROME_DEBUGGING_PORT": "9222"
+      }
     }
   }
 }

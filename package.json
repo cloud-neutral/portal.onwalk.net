@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "bash scripts/Dev-MCP-Server.sh && next dev --turbo",
     "dev:raw": "next dev --turbo",
-    "prebuild": "tsx scripts/generate-content.ts",
+    "prebuild": "bash scripts/clone-content.sh && tsx scripts/generate-content.ts",
     "build": "next build",
     "build:static": "npm run prebuild && next build",
     "start": "node ./scripts/start.js",

@@ -32,6 +32,16 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "mmbiz.qpic.cn",
       },
+      {
+        protocol: "https",
+        hostname: "**",
+        pathname: "/images/**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+        pathname: "/images/**",
+      },
     ],
   },
 

@@ -1,0 +1,74 @@
+export const runtime = 'edge'
+
+const SCENES = new Set(['drone', 'landscape', 'citywalk', 'architecture', 'night', 'panorama'])
+const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.svg'])
+const IMMUTABLE_CACHE = 'public, max-age=31536000, immutable'
+
+function notFoundResponse(): Response {
+  return new Response(null, {
+    status: 404,
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+  })
+}
+
+function isValidExtension(filename: string): boolean {
+  const dotIndex = filename.lastIndexOf('.')
+  if (dotIndex <= 0 || dotIndex === filename.length - 1) {
+    return false
+  }
+
+  return IMAGE_EXTENSIONS.has(filename.slice(dotIndex).toLowerCase())
+}
+
+function buildKey(slug: string[]): string | null {
+  if (slug.length !== 5) {
+    return null
+  }
+
+  const [country, province, city, scene, filename] = slug
+  if (!country || !province || !city || !scene || !filename) {
+    return null
+  }
+
+  if (!SCENES.has(scene)) {
+    return null
+  }
+
+  if (!isValidExtension(filename)) {
+    return null
+  }
+
+  return `public/images/${country}/${province}/${city}/${scene}/${filename}`
+}
+
+function redirectResponse(url: string): Response {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: url,
+      'Cache-Control': IMMUTABLE_CACHE,
+    },
+  })
+}
+
+export async function GET(_request: Request, { params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug } = await params
+  const key = buildKey(slug)
+  if (!key) {
+    return notFoundResponse()
+  }
+
+  const baseUrl = process.env.R2_PUBLIC_BASE_URL?.trim()
+  if (!baseUrl) {
+    return notFoundResponse()
+  }
+
+  const redirectUrl = `${baseUrl.replace(/\/+$/, '')}/${key}`
+  return redirectResponse(redirectUrl)
+}
+
+export async function HEAD(request: Request, context: { params: Promise<{ slug: string[] }> }) {
+  return GET(request, context)
+}

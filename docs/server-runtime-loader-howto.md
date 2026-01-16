@@ -31,8 +31,8 @@ Example:
 ```yaml
 storage:
   credentials:
-    accessKeyId: { env: AWS_ACCESS_KEY_ID }
-    secretAccessKey: { env: AWS_SECRET_ACCESS_KEY }
+    accessKeyId: { env: ACCESS_KEY_ID }
+    secretAccessKey: { env: SECRET_ACCESS_KEY }
 ```
 
 ## Storage config layout (reference)
@@ -49,9 +49,9 @@ storage:
   publicBaseUrl: https://cdn.example.com
 
   credentials:
-    accessKeyId: { env: AWS_ACCESS_KEY_ID }
-    secretAccessKey: { env: AWS_SECRET_ACCESS_KEY }
-    sessionToken: { env: AWS_SESSION_TOKEN }
+    accessKeyId: { env: ACCESS_KEY_ID }
+    secretAccessKey: { env: SECRET_ACCESS_KEY }
+    sessionToken: { env: SESSION_TOKEN }
 
   gcs:
     projectId: my-gcp-project
@@ -69,3 +69,15 @@ storage:
     token: { env: BLOB_READ_WRITE_TOKEN }
     access: public
 ```
+
+## R2 credentials (AK/SK)
+
+R2 is S3-compatible, so it uses the same Access Key / Secret Access Key pair:
+
+- `ACCESS_KEY_ID` → R2 Access Key ID
+- `SECRET_ACCESS_KEY` → R2 Secret Access Key
+- `SESSION_TOKEN` is optional (usually not needed for R2)
+
+For R2-specific settings, keep `storage.r2.endpoint` pointed at
+`https://<account-id>.r2.cloudflarestorage.com` and set `storage.r2.region`
+to `auto`.

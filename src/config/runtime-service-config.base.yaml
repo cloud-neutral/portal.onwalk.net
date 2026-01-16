@@ -12,9 +12,9 @@ storage:
   prefix: public
   publicBaseUrl: https://cdn.example.com
   credentials:
-    accessKeyId: { env: AWS_ACCESS_KEY_ID }
-    secretAccessKey: { env: AWS_SECRET_ACCESS_KEY }
-    sessionToken: { env: AWS_SESSION_TOKEN }
+    accessKeyId: { env: ACCESS_KEY_ID }
+    secretAccessKey: { env: SECRET_ACCESS_KEY }
+    sessionToken: { env: SESSION_TOKEN }
   gcs:
     projectId: example-project
     bucket: example-gcs-bucket
@@ -26,10 +26,10 @@ storage:
     region: cn-shanghai
     publicBaseUrl: https://example-oss-bucket.oss-cn-shanghai.aliyuncs.com
   r2:
-    endpoint: https://<accountid>.r2.cloudflarestorage.com
-    bucket: example-r2-bucket
+    endpoint: https://e71be5efb76a6c54f78f008da4404f00.r2.cloudflarestorage.com
+    bucket: sit-portal-onwalk-net
     region: auto
-    publicBaseUrl: https://assets.example.com
+    publicBaseUrl: https://e71be5efb76a6c54f78f008da4404f00.r2.cloudflarestorage.com
   vercel:
     token: { env: BLOB_READ_WRITE_TOKEN }
     access: public

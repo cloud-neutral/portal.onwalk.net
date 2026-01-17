@@ -57,6 +57,14 @@ export:
 	@echo "📦 Exporting dashboard static site to ./out ..."
 	@NEXT_SHOULD_EXPORT=true yarn next export
 
+sync-assets:
+	@echo "🔄 Syncing public assets to object storage..."
+	@# Source .env and extract R2 config manually to pass to script
+	@if [ -f .env ]; then set -a; source .env; set +a; fi; \
+	STORAGE_BUCKET=$$(grep "R2_BUCKET_NAME=" .env | cut -d= -f2 | tr -d "'"); \
+	STORAGE_ENDPOINT=$$(grep "R2_ENDPOINT=" .env | cut -d= -f2 | tr -d "'"); \
+	STORAGE_BUCKET="$$STORAGE_BUCKET" STORAGE_ENDPOINT="$$STORAGE_ENDPOINT" bash scripts/sync-public-assets.sh --apply
+
 clean:
 	@echo "🧹 Cleaning .next and out directories..."
 	rm -rf .next out

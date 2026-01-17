@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "bash scripts/Dev-MCP-Server.sh && next dev --turbo",
     "dev:raw": "next dev --turbo",
-    "prebuild": "bash scripts/clone-content.sh",
+    "prebuild": "bash scripts/prebuild.sh",
     "build": "next build",
     "build:static": "npm run prebuild && next build",
     "prod": "bash scripts/prod.sh",

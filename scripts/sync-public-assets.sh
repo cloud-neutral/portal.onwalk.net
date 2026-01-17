@@ -295,4 +295,8 @@ if [[ -n "${CACHE_CONTROL}" ]]; then
   RCLONE_ARGS+=("--s3-cache-control" "${CACHE_CONTROL}")
 fi
 
+
+echo "Generating local media index..."
+python3 scripts/generate-media-index.py
+
 env "${RCLONE_ENV[@]}" rclone "${RCLONE_ARGS[@]}" "${PUBLIC_DIR}/" "${DESTINATION}"

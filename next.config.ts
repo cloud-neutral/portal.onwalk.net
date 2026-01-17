@@ -4,6 +4,15 @@ import path from "node:path"
 const rootDir = process.cwd()
 
 const nextConfig: NextConfig = {
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+  onDemandEntries: {
+    maxInactiveAge: 60 * 1000,
+  },
+
   cacheComponents: true,
   // ===============================
   // 🚀 生产优化 —— 最关键的三行
@@ -92,30 +101,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(rootDir),
   },
-  async redirects() {
-    return [
-      {
-        source: "/XStream",
-        destination: "/xstream",
-        permanent: true,
-      },
-      {
-        source: "/Xstream",
-        destination: "/xstream",
-        permanent: true,
-      },
-      {
-        source: "/XScopeHub",
-        destination: "/xscopehub",
-        permanent: true,
-      },
-      {
-        source: "/XCloudFlow",
-        destination: "/xcloudflow",
-        permanent: true,
-      },
-    ]
-  },
+
   async rewrites() {
     return [
       {

@@ -24,14 +24,16 @@ def generate_index(category, config):
     items = []
 
     if not os.path.exists(base_dir):
-        print(f"Directory not found: {base_dir}")
-        return []
+        print(f"Directory not found: {base_dir}. Skipping.")
+        return None
 
+    has_files = False
     # Walk directory
     for root, _, files in os.walk(base_dir):
         for file in files:
             ext = os.path.splitext(file)[1].lower()
             if ext in valid_extensions:
+                has_files = True
                 # Calculate relative path from public/{category}
                 full_path = os.path.join(root, file)
                 rel_path = os.path.relpath(full_path, base_dir)
@@ -47,6 +49,11 @@ def generate_index(category, config):
                     "ext": ext.lstrip("."),
                     "type": media_type
                 })
+    
+    if not has_files:
+        print(f"No files found in {base_dir}. Skipping generation to preserve existing index if any.")
+        return None
+
 
     # Sort lexicographically by path
     items.sort(key=lambda x: x["path"])
@@ -60,6 +67,9 @@ def main():
         print(f"Scanning {category}...")
         items = generate_index(category, config)
         
+        if items is None:
+            continue
+
         output_file = os.path.join(OUTPUT_DIR, f"{category}.json")
         
         # Write JSON with deterministic formatting

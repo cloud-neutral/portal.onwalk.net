@@ -1,5 +1,5 @@
 'use client'
-import { BookOpen, Github, Globe, Link, MessageCircle, Sparkles, Moon, Sun } from 'lucide-react'
+import { BookOpen, Github, Globe, Link, Linkedin, Instagram, Pin, Moon, Sun } from 'lucide-react'
 
 import { useThemeStore } from '@components/theme'
 
@@ -11,8 +11,9 @@ export default function Footer() {
     { label: 'Repository', icon: Link, href: 'https://hub.docker.com/u/cloudneutral' },
     { label: 'Docs', icon: BookOpen, href: '#' },
     { label: 'Globe', icon: Globe, href: '#' },
-    { label: '微信公众号', icon: MessageCircle, href: '#' },
-    { label: '小红书', icon: Sparkles, href: '#' },
+    { label: 'Pinterest', icon: Pin, href: 'https://pinterest.com/haitaopanhq/' },
+    { label: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/haitaopan/' },
+    { label: 'Instagram', icon: Instagram, href: '#' },
   ]
 
   const toggleLabel = isDark ? '切换为浅色主题' : '切换为深色主题'

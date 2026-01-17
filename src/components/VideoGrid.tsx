@@ -100,6 +100,12 @@ export default function VideoGrid({
                 {item.title ?? item.slug}
               </Link>
               {item.location && <p className="text-xs text-[#747775]">{item.location}</p>}
+              {item.src && item.src.startsWith('/') && !item.src.startsWith('//') && (
+                <p className="mt-2 rounded bg-red-100 p-2 text-xs text-red-600">
+                  ⚠️ Relative URL detected: {item.src}. <br />
+                  Check NEXT_PUBLIC_MEDIA_BASE_URL config.
+                </p>
+              )}
             </div>
           </div>
         ))}

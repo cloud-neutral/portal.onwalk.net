@@ -262,8 +262,16 @@ if [[ -z "${PREFIX}" && -n "${STORAGE_PREFIX}" ]]; then
   PREFIX="${STORAGE_PREFIX}"
 fi
 
-PREFIX="${PREFIX#/}"
-PREFIX="${PREFIX%/}"
+if [[ -z "${PREFIX}" ]]; then
+  PREFIX="/"
+fi
+
+if [[ "${PREFIX}" == "/" ]]; then
+  PREFIX=""
+else
+  PREFIX="${PREFIX#/}"
+  PREFIX="${PREFIX%/}"
+fi
 
 DESTINATION="${REMOTE_NAME}:${STORAGE_BUCKET}"
 if [[ -n "${PREFIX}" ]]; then

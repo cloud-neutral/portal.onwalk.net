@@ -58,6 +58,7 @@ export:
 	@NEXT_SHOULD_EXPORT=true yarn next export
 
 sync-assets:
+	python3 scripts/generate-media-index.py
 	@echo "🔄 Syncing public assets to object storage..."
 	@# Source .env and extract R2 config manually to pass to script
 	@if [ -f .env ]; then set -a; source .env; set +a; fi; \

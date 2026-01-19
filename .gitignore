@@ -64,3 +64,6 @@ build/
 dist/
 out/
 target/
+
+.gemini/
+gha-creds-*.json

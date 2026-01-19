@@ -1,0 +1,464 @@
+name: 'Gemini Assistant'
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Command to run'
+        required: true
+        default: 'triage'
+        type: choice
+        options:
+          - triage
+          - review
+          - invoke
+          - scheduled-triage
+      issue_number:
+        description: 'Issue or PR number (optional, for triage/review/invoke)'
+        required: false
+        type: string
+      additional_context:
+        description: 'Additional context'
+        required: false
+        type: string
+  schedule:
+    - cron: '0 * * * *'
+  pull_request_review_comment:
+    types: ['created']
+  pull_request_review:
+    types: ['submitted']
+  pull_request:
+    types: ['opened']
+  issues:
+    types: ['opened', 'reopened']
+  issue_comment:
+    types: ['created']
+
+defaults:
+  run:
+    shell: 'bash'
+
+jobs:
+  router:
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'read'
+      issues: 'read'
+      pull-requests: 'read'
+    outputs:
+      command: '${{ steps.determine.outputs.command }}'
+      issue_number: '${{ steps.determine.outputs.issue_number }}'
+      additional_context: '${{ steps.determine.outputs.additional_context }}'
+      title: '${{ steps.fetch_details.outputs.title }}'
+      body: '${{ steps.fetch_details.outputs.body }}'
+    steps:
+      - name: 'Determine Command and Context'
+        id: 'determine'
+        uses: 'actions/github-script@v7'
+        env:
+          EVENT_NAME: '${{ github.event_name }}'
+          EVENT_ACTION: '${{ github.event.action }}'
+          PAYLOAD_BODY: '${{ github.event.comment.body || github.event.review.body || github.event.issue.body }}'
+          INPUT_COMMAND: '${{ inputs.command }}'
+          INPUT_ISSUE: '${{ inputs.issue_number }}'
+          INPUT_CONTEXT: '${{ inputs.additional_context }}'
+          SENDER_TYPE: '${{ github.event.sender.type }}'
+          IS_FORK: '${{ github.event.pull_request.head.repo.fork }}'
+          AUTHOR_ASSOC: '${{ github.event.comment.author_association || github.event.review.author_association || github.event.issue.author_association }}'
+        with:
+          script: |
+            const { EVENT_NAME, EVENT_ACTION, PAYLOAD_BODY, INPUT_COMMAND, INPUT_ISSUE, INPUT_CONTEXT, SENDER_TYPE, IS_FORK, AUTHOR_ASSOC } = process.env;
+            
+            let command = 'fallthrough';
+            let issue_number = '';
+            let additional_context = '';
+
+            // 1. SCHEDULE
+            if (EVENT_NAME === 'schedule') {
+              command = 'scheduled-triage';
+            }
+            // 2. WORKFLOW DISPATCH
+            else if (EVENT_NAME === 'workflow_dispatch') {
+              command = INPUT_COMMAND;
+              issue_number = INPUT_ISSUE;
+              additional_context = INPUT_CONTEXT;
+            }
+            // 3. EVENTS (ChatOps & Auto-triggers)
+            else {
+              const eventType = `${EVENT_NAME}.${EVENT_ACTION}`;
+              // Permission/Safety checks
+              const validUser = SENDER_TYPE === 'User';
+              const validAssoc = ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(AUTHOR_ASSOC);
+              const isFork = IS_FORK === 'true';
+              
+              if (EVENT_NAME === 'pull_request' && !isFork) {
+                 command = 'review';
+              } else if (['issues.opened', 'issues.reopened'].includes(eventType)) {
+                 command = 'triage';
+              } else if (validUser && PAYLOAD_BODY && PAYLOAD_BODY.startsWith('@gemini-cli') && validAssoc) {
+                 // ChatOps
+                 if (PAYLOAD_BODY.startsWith("@gemini-cli /review")) {
+                    command = 'review';
+                    additional_context = PAYLOAD_BODY.replace(/^@gemini-cli \/review/, '').trim();
+                 } else if (PAYLOAD_BODY.startsWith("@gemini-cli /triage")) {
+                    command = 'triage';
+                 } else {
+                    command = 'invoke';
+                    additional_context = PAYLOAD_BODY.replace(/^@gemini-cli/, '').trim();
+                 }
+              }
+              
+              if (command !== 'fallthrough' && !issue_number) {
+                 issue_number = context.issue.number;
+              }
+            }
+            
+            core.setOutput('command', command);
+            core.setOutput('issue_number', issue_number);
+            core.setOutput('additional_context', additional_context);
+
+      - name: 'Fetch Issue Details'
+        id: 'fetch_details'
+        if: steps.determine.outputs.command != 'scheduled-triage' && steps.determine.outputs.command != 'fallthrough' && steps.determine.outputs.issue_number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ steps.determine.outputs.issue_number }}
+          REPO: ${{ github.repository }}
+        run: |
+          DATA=$(gh issue view "$ISSUE" --repo "$REPO" --json title,body)
+          echo "title<<EOF" >> $GITHUB_OUTPUT
+          echo "$DATA" | jq -r .title >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$DATA" | jq -r .body >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 'Acknowledge request'
+        if: github.event_name != 'workflow_dispatch' && github.event_name != 'schedule' && steps.determine.outputs.command != 'fallthrough'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ steps.determine.outputs.issue_number }}
+          REPO: ${{ github.repository }}
+          MESSAGE: |-
+            🤖 Hi @${{ github.actor }}, I've received your request, and I'm working on it now! You can track my progress [in the logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for more details.
+        run: |-
+          gh issue comment "$ISSUE" --body "$MESSAGE" --repo "$REPO"
+
+  review:
+    needs: router
+    if: needs.router.outputs.command == 'review'
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 7
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      issues: 'write'
+      pull-requests: 'write'
+    steps:
+      - name: 'Mint identity token'
+        id: 'mint_identity_token'
+        if: ${{ vars.APP_ID }}
+        uses: 'actions/create-github-app-token@v1'
+        with:
+          app-id: '${{ vars.APP_ID }}'
+          private-key: '${{ secrets.APP_PRIVATE_KEY }}'
+
+      - name: 'Checkout repository'
+        uses: 'actions/checkout@v4'
+
+      - name: 'Run Gemini pull request review'
+        uses: 'google-github-actions/run-gemini-cli@v0'
+        env:
+          GITHUB_TOKEN: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
+          ISSUE_TITLE: '${{ needs.router.outputs.title }}'
+          ISSUE_BODY: '${{ needs.router.outputs.body }}'
+          PULL_REQUEST_NUMBER: '${{ needs.router.outputs.issue_number }}'
+          REPOSITORY: '${{ github.repository }}'
+          ADDITIONAL_CONTEXT: '${{ needs.router.outputs.additional_context }}'
+        with:
+          gcp_location: '${{ vars.GOOGLE_CLOUD_LOCATION }}'
+          gcp_project_id: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
+          gcp_service_account: '${{ vars.SERVICE_ACCOUNT_EMAIL }}'
+          gcp_workload_identity_provider: '${{ vars.GCP_WIF_PROVIDER }}'
+          gemini_api_key: '${{ secrets.GEMINI_API_KEY }}'
+          gemini_cli_version: '${{ vars.GEMINI_CLI_VERSION }}'
+          gemini_debug: '${{ fromJSON(vars.GEMINI_DEBUG || vars.ACTIONS_STEP_DEBUG || false) }}'
+          gemini_model: '${{ vars.GEMINI_MODEL }}'
+          google_api_key: '${{ secrets.GOOGLE_API_KEY }}'
+          use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
+          use_vertex_ai: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
+          upload_artifacts: '${{ vars.UPLOAD_ARTIFACTS }}'
+          workflow_name: 'gemini-review'
+          settings: |-
+            {
+              "model": { "maxSessionTurns": 25 },
+              "telemetry": { "enabled": true, "target": "local", "outfile": ".gemini/telemetry.log" },
+              "mcpServers": {
+                "github": {
+                  "command": "docker",
+                  "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server:v0.18.0"],
+                  "includeTools": ["add_comment_to_pending_review", "create_pending_pull_request_review", "pull_request_read", "submit_pending_pull_request_review"],
+                  "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}" }
+                }
+              },
+              "tools": { "core": ["run_shell_command(cat)", "run_shell_command(echo)", "run_shell_command(grep)", "run_shell_command(head)", "run_shell_command(tail)"] }
+            }
+          prompt: '/gemini-review'
+
+  triage:
+    needs: router
+    if: needs.router.outputs.command == 'triage'
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 7
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      issues: 'write'
+      pull-requests: 'write'
+    steps:
+      - name: 'Get repository labels'
+        id: 'get_labels'
+        uses: 'actions/github-script@v7'
+        with:
+          script: |-
+            const labels = [];
+            for await (const response of github.paginate.iterator(github.rest.issues.listLabelsForRepo, {
+              owner: context.repo.owner, repo: context.repo.repo, per_page: 100
+            })) { labels.push(...response.data); }
+            if (!labels || labels.length === 0) core.setFailed('No labels found.');
+            const labelNames = labels.map(l => l.name).sort();
+            core.setOutput('available_labels', labelNames.join(','));
+            return labelNames;
+
+      - name: 'Run Gemini issue analysis'
+        id: 'gemini_analysis'
+        if: steps.get_labels.outputs.available_labels != ''
+        uses: 'google-github-actions/run-gemini-cli@v0'
+        env:
+          GITHUB_TOKEN: ''
+          ISSUE_TITLE: '${{ needs.router.outputs.title }}'
+          ISSUE_BODY: '${{ needs.router.outputs.body }}'
+          AVAILABLE_LABELS: '${{ steps.get_labels.outputs.available_labels }}'
+        with:
+          gcp_location: '${{ vars.GOOGLE_CLOUD_LOCATION }}'
+          gcp_project_id: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
+          gcp_service_account: '${{ vars.SERVICE_ACCOUNT_EMAIL }}'
+          gcp_workload_identity_provider: '${{ vars.GCP_WIF_PROVIDER }}'
+          gemini_api_key: '${{ secrets.GEMINI_API_KEY }}'
+          gemini_cli_version: '${{ vars.GEMINI_CLI_VERSION }}'
+          gemini_debug: '${{ fromJSON(vars.GEMINI_DEBUG || vars.ACTIONS_STEP_DEBUG || false) }}'
+          gemini_model: '${{ vars.GEMINI_MODEL }}'
+          google_api_key: '${{ secrets.GOOGLE_API_KEY }}'
+          use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
+          use_vertex_ai: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
+          upload_artifacts: '${{ vars.UPLOAD_ARTIFACTS }}'
+          workflow_name: 'gemini-triage'
+          settings: |-
+            {
+              "model": { "maxSessionTurns": 25 },
+              "telemetry": { "enabled": true, "target": "local", "outfile": ".gemini/telemetry.log" },
+              "tools": { "core": ["run_shell_command(echo)"] }
+            }
+          prompt: '/gemini-triage'
+
+      - name: 'Mint identity token'
+        id: 'mint_identity_token'
+        if: ${{ vars.APP_ID }}
+        uses: 'actions/create-github-app-token@v1'
+        with:
+          app-id: '${{ vars.APP_ID }}'
+          private-key: '${{ secrets.APP_PRIVATE_KEY }}'
+
+      - name: 'Apply labels'
+        env:
+          ISSUE_NUMBER: '${{ needs.router.outputs.issue_number }}'
+          AVAILABLE_LABELS: '${{ steps.get_labels.outputs.available_labels }}'
+          SELECTED_LABELS: '${{ env.SELECTED_LABELS }}'
+        uses: 'actions/github-script@v7'
+        with:
+          github-token: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
+          script: |-
+            const availableLabels = (process.env.AVAILABLE_LABELS || '').split(',').map(l => l.trim()).sort();
+            const selectedLabels = (process.env.SELECTED_LABELS || '').split(',').map(l => l.trim()).filter(l => availableLabels.includes(l)).sort();
+            const issueNumber = process.env.ISSUE_NUMBER;
+            if (selectedLabels.length > 0) {
+              await github.rest.issues.setLabels({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: issueNumber, labels: selectedLabels
+              });
+              core.info(`Applied labels: ${selectedLabels.join(',')}`);
+            } else {
+              core.info('No labels to apply.');
+            }
+
+  invoke:
+    needs: router
+    if: needs.router.outputs.command == 'invoke'
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      issues: 'write'
+      pull-requests: 'write'
+    steps:
+      - name: 'Mint identity token'
+        id: 'mint_identity_token'
+        if: ${{ vars.APP_ID }}
+        uses: 'actions/create-github-app-token@v1'
+        with:
+          app-id: '${{ vars.APP_ID }}'
+          private-key: '${{ secrets.APP_PRIVATE_KEY }}'
+
+      - name: 'Run Gemini CLI'
+        uses: 'google-github-actions/run-gemini-cli@v0'
+        env:
+          TITLE: '${{ needs.router.outputs.title }}'
+          DESCRIPTION: '${{ needs.router.outputs.body }}'
+          EVENT_NAME: '${{ github.event_name }}'
+          GITHUB_TOKEN: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
+          IS_PULL_REQUEST: 'true' # Assuming invoke is mostly used on PRs/Issues
+          ISSUE_NUMBER: '${{ needs.router.outputs.issue_number }}'
+          REPOSITORY: '${{ github.repository }}'
+          ADDITIONAL_CONTEXT: '${{ needs.router.outputs.additional_context }}'
+        with:
+          gcp_location: '${{ vars.GOOGLE_CLOUD_LOCATION }}'
+          gcp_project_id: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
+          gcp_service_account: '${{ vars.SERVICE_ACCOUNT_EMAIL }}'
+          gcp_workload_identity_provider: '${{ vars.GCP_WIF_PROVIDER }}'
+          gemini_api_key: '${{ secrets.GEMINI_API_KEY }}'
+          gemini_cli_version: '${{ vars.GEMINI_CLI_VERSION }}'
+          gemini_debug: '${{ fromJSON(vars.GEMINI_DEBUG || vars.ACTIONS_STEP_DEBUG || false) }}'
+          gemini_model: '${{ vars.GEMINI_MODEL }}'
+          google_api_key: '${{ secrets.GOOGLE_API_KEY }}'
+          use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
+          use_vertex_ai: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
+          upload_artifacts: '${{ vars.UPLOAD_ARTIFACTS }}'
+          workflow_name: 'gemini-invoke'
+          settings: |-
+            {
+              "model": { "maxSessionTurns": 25 },
+              "telemetry": { "enabled": true, "target": "local", "outfile": ".gemini/telemetry.log" },
+              "mcpServers": {
+                "github": {
+                  "command": "docker",
+                  "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server:v0.18.0"],
+                  "includeTools": ["add_issue_comment", "get_issue", "get_issue_comments", "list_issues", "search_issues", "create_pull_request", "pull_request_read", "list_pull_requests", "search_pull_requests", "create_branch", "create_or_update_file", "delete_file", "fork_repository", "get_commit", "get_file_contents", "list_commits", "push_files", "search_code"],
+                  "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}" }
+                }
+              },
+              "tools": { "core": ["run_shell_command(cat)", "run_shell_command(echo)", "run_shell_command(grep)", "run_shell_command(head)", "run_shell_command(tail)"] }
+            }
+          prompt: '/gemini-invoke'
+
+  scheduled-triage:
+    needs: router
+    if: needs.router.outputs.command == 'scheduled-triage'
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 7
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      issues: 'write'
+      pull-requests: 'write'
+    steps:
+      - name: 'Get repository labels'
+        id: 'get_labels'
+        uses: 'actions/github-script@v7'
+        with:
+          script: |-
+            const labels = [];
+            for await (const response of github.paginate.iterator(github.rest.issues.listLabelsForRepo, {
+              owner: context.repo.owner, repo: context.repo.repo, per_page: 100
+            })) { labels.push(...response.data); }
+            if (!labels) core.setFailed('No labels found.');
+            const labelNames = labels.map(l => l.name).sort();
+            core.setOutput('available_labels', labelNames.join(','));
+            return labelNames;
+
+      - name: 'Find untriaged issues'
+        id: 'find_issues'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |-
+          ISSUES="$(gh issue list --state 'open' --search 'no:label label:"status/needs-triage"' --json number,title,body --limit '100' --repo "$REPO")"
+          echo "issues_to_triage<<EOF" >> $GITHUB_OUTPUT
+          echo "$ISSUES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 'Run Gemini Issue Analysis'
+        if: steps.find_issues.outputs.issues_to_triage != '[]'
+        uses: 'google-github-actions/run-gemini-cli@v0'
+        env:
+          GITHUB_TOKEN: ''
+          ISSUES_TO_TRIAGE: '${{ steps.find_issues.outputs.issues_to_triage }}'
+          AVAILABLE_LABELS: '${{ steps.get_labels.outputs.available_labels }}'
+        with:
+          gcp_location: '${{ vars.GOOGLE_CLOUD_LOCATION }}'
+          gcp_project_id: '${{ vars.GOOGLE_CLOUD_PROJECT }}'
+          gcp_service_account: '${{ vars.SERVICE_ACCOUNT_EMAIL }}'
+          gcp_workload_identity_provider: '${{ vars.GCP_WIF_PROVIDER }}'
+          gemini_api_key: '${{ secrets.GEMINI_API_KEY }}'
+          gemini_cli_version: '${{ vars.GEMINI_CLI_VERSION }}'
+          gemini_debug: '${{ fromJSON(vars.GEMINI_DEBUG || vars.ACTIONS_STEP_DEBUG || false) }}'
+          gemini_model: '${{ vars.GEMINI_MODEL }}'
+          google_api_key: '${{ secrets.GOOGLE_API_KEY }}'
+          use_gemini_code_assist: '${{ vars.GOOGLE_GENAI_USE_GCA }}'
+          use_vertex_ai: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
+          upload_artifacts: '${{ vars.UPLOAD_ARTIFACTS }}'
+          workflow_name: 'gemini-scheduled-triage'
+          settings: |-
+            {
+              "model": { "maxSessionTurns": 25 },
+              "telemetry": { "enabled": true, "target": "local", "outfile": ".gemini/telemetry.log" },
+              "tools": { "core": ["run_shell_command(echo)", "run_shell_command(jq)", "run_shell_command(printenv)"] }
+            }
+          prompt: '/gemini-scheduled-triage'
+
+      - name: 'Mint identity token'
+        id: 'mint_identity_token'
+        if: ${{ vars.APP_ID }}
+        uses: 'actions/create-github-app-token@v1'
+        with:
+          app-id: '${{ vars.APP_ID }}'
+          private-key: '${{ secrets.APP_PRIVATE_KEY }}'
+
+      - name: 'Apply labels'
+        env:
+          AVAILABLE_LABELS: '${{ steps.get_labels.outputs.available_labels }}'
+          TRIAGED_ISSUES: '${{ env.TRIAGED_ISSUES }}'
+        uses: 'actions/github-script@v7'
+        with:
+          github-token: '${{ steps.mint_identity_token.outputs.token || secrets.GITHUB_TOKEN || github.token }}'
+          script: |-
+            const availableLabels = (process.env.AVAILABLE_LABELS || '').split(',').map(l => l.trim()).sort();
+            const triagedIssues = (JSON.parse(process.env.TRIAGED_ISSUES || '{}')).sort((a, b) => a.issue_number - b.issue_number);
+            for (const issue of triagedIssues) {
+              if (!issue || !issue.issue_number) continue;
+              const labelsToSet = (issue.labels_to_set || []).map(l => l.trim()).filter(l => availableLabels.includes(l)).sort();
+              if (labelsToSet.length > 0) {
+                await github.rest.issues.setLabels({
+                  owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.issue_number, labels: labelsToSet
+                });
+              }
+            }
+
+  fallthrough:
+    needs: [router, review, triage, invoke, scheduled-triage]
+    if: always() && !cancelled() && (needs.router.outputs.command == 'fallthrough' || contains(needs.*.result, 'failure'))
+    runs-on: 'ubuntu-latest'
+    permissions:
+      contents: 'read'
+      issues: 'write'
+      pull-requests: 'write'
+    steps:
+      - name: 'Send failure comment'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ needs.router.outputs.issue_number }}
+          REPO: ${{ github.repository }}
+          MESSAGE: |-
+             🤖 I'm sorry @${{ github.actor }}, but I was unable to process your request. Please [see the logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for more details.
+        run: |-
+           if [ -n "$ISSUE" ]; then
+             gh issue comment "$ISSUE" --body "$MESSAGE" --repo "$REPO"
+           fi

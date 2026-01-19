@@ -448,52 +448,52 @@
     "views": 2296
   },
   {
-    "path": "china/shanghai/chongming/25918ba41f2fc69ee79f43bfd41c53b8 2.JPG",
+    "path": "china/shanghai/chongming/25918ba41f2fc69ee79f43bfd41c53b8.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2026-01-18T15:35:23",
     "location": "Chongming, Shanghai",
-    "views": 2679
+    "views": 4718
   },
   {
-    "path": "china/shanghai/chongming/28e79d7f058a1e629f32ab320cf4bd4d 2.JPG",
+    "path": "china/shanghai/chongming/28e79d7f058a1e629f32ab320cf4bd4d.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2026-01-18T15:35:34",
     "location": "Chongming, Shanghai",
-    "views": 2172
+    "views": 4540
   },
   {
-    "path": "china/shanghai/chongming/3f5652233f7e186fad8d7c3f2db9c707 2.JPG",
+    "path": "china/shanghai/chongming/3f5652233f7e186fad8d7c3f2db9c707.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2026-01-18T15:35:36",
     "location": "Chongming, Shanghai",
-    "views": 732
+    "views": 4260
   },
   {
-    "path": "china/shanghai/chongming/9f44ea55217e684e6a3a019f9a7e15de 2.JPG",
+    "path": "china/shanghai/chongming/9f44ea55217e684e6a3a019f9a7e15de.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2026-01-18T15:35:32",
     "location": "Chongming, Shanghai",
-    "views": 3578
+    "views": 2961
   },
   {
-    "path": "china/shanghai/chongming/c37e31f7a8d46e92480c0d2f121fdcd7 2.JPG",
+    "path": "china/shanghai/chongming/c37e31f7a8d46e92480c0d2f121fdcd7.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2026-01-18T15:35:30",
     "location": "Chongming, Shanghai",
-    "views": 2015
+    "views": 3656
   },
   {
-    "path": "china/shanghai/chongming/ccef5d7259e77913fc2730bf77941309 2.JPG",
+    "path": "china/shanghai/chongming/ccef5d7259e77913fc2730bf77941309.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2026-01-18T15:35:27",
     "location": "Chongming, Shanghai",
-    "views": 388
+    "views": 4452
   },
   {
     "path": "china/shanghai/huangpu/architecture/01b25cf5e3bcdc15dbec5d6ae59cf195.JPG",
@@ -640,6 +640,30 @@
     "views": 4889
   },
   {
+    "path": "china/xinjiang/新疆-夏塔.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:44:54",
+    "location": "Xinjiang, China",
+    "views": 839
+  },
+  {
+    "path": "china/xinjiang/新疆-特克斯-八卦城.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-01T17:43:08",
+    "location": "Xinjiang, China",
+    "views": 4527
+  },
+  {
+    "path": "china/xinjiang/新疆-赛里木湖.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:19:07",
+    "location": "Xinjiang, China",
+    "views": 2260
+  },
+  {
     "path": "china/yunnan/xishuangbanna/DSC00031.JPG",
     "ext": "jpg",
     "type": "image",
@@ -782,30 +806,6 @@
     "updatedAt": "2025-12-25T16:43:38",
     "location": null,
     "views": 4792
-  },
-  {
-    "path": "新疆-夏塔.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:44:54",
-    "location": null,
-    "views": 2657
-  },
-  {
-    "path": "新疆-特克斯-八卦城.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-01T17:43:08",
-    "location": null,
-    "views": 108
-  },
-  {
-    "path": "新疆-赛里木湖.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:19:07",
-    "location": null,
-    "views": 2285
   },
   {
     "path": "桂林公园.JPG",

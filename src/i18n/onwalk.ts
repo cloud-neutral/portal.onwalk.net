@@ -220,8 +220,8 @@ export const onwalkCopy: Record<Language, OnwalkCopy> = {
       },
     },
     footer: {
-      tagline: 'Images as the entry point, words as the structure — personal walking and photography, with text shaped in collaboration with AI.',
-      description: 'Images and words come from personal journeys, updated regularly.',
+      tagline: 'Images lead, words shape — personal journeys in walking and photography, refined with AI.',
+      description: '',
       socials: {
         twitter: 'X (Twitter)',
         xiaohongshu: 'RED (Xiaohongshu)',

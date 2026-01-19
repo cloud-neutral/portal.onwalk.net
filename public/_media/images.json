@@ -1,411 +1,19 @@
 [
   {
-    "path": "1634b87dbd44a83514b3f3e1d1a172af.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:22:20",
-    "location": null,
-    "views": 919
-  },
-  {
-    "path": "1e98e6a4b358ccc58a581f7b25ecea22.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-05T16:51:47",
-    "location": null,
-    "views": 3917
-  },
-  {
-    "path": "262764c4c58c5349361c36e40c95028b.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:24:59",
-    "location": null,
-    "views": 423
-  },
-  {
-    "path": "40f4adb2f1914c73bd69339398805564.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:25:04",
-    "location": null,
-    "views": 113
-  },
-  {
-    "path": "59164030c1be123e5aa1df3887144348.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:24:57",
-    "location": null,
-    "views": 3652
-  },
-  {
-    "path": "5e51461672d9270298ca3bfe9f0f387a.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:23:12",
-    "location": null,
-    "views": 3268
-  },
-  {
-    "path": "7209bded32c9e4a210491c1ff47f53de.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:22:05",
-    "location": null,
-    "views": 3272
-  },
-  {
-    "path": "7566985ae901cf390533045009079fce.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:22:10",
-    "location": null,
-    "views": 1903
-  },
-  {
-    "path": "8b2ca15e085dbd79b400524ab7284425.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-05T16:51:59",
-    "location": null,
-    "views": 4274
-  },
-  {
-    "path": "8b408a3b16202f4b46da100283708971.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:25:02",
-    "location": null,
-    "views": 1195
-  },
-  {
-    "path": "9735cd1e27c4bc089b320ae8a99e60fd.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:24:50",
-    "location": null,
-    "views": 948
-  },
-  {
-    "path": "985c8226b07e03286c45d0e3d371f9f3.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:24:48",
-    "location": null,
-    "views": 3596
-  },
-  {
-    "path": "IMG_6875 2.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-25T16:35:55",
-    "location": null,
-    "views": 2267
-  },
-  {
-    "path": "IMG_6875.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-25T16:35:55",
-    "location": null,
-    "views": 2900
-  },
-  {
-    "path": "IMG_6894.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:17:05",
-    "location": null,
-    "views": 3182
-  },
-  {
-    "path": "IMG_6896.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:17:51",
-    "location": null,
-    "views": 2715
-  },
-  {
-    "path": "IMG_6897.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:18:05",
-    "location": null,
-    "views": 3941
-  },
-  {
-    "path": "IMG_6898.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:18:23",
-    "location": null,
-    "views": 3344
-  },
-  {
-    "path": "IMG_6900.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:18:50",
-    "location": null,
-    "views": 4524
-  },
-  {
-    "path": "IMG_6901.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:19:07",
-    "location": null,
-    "views": 1815
-  },
-  {
-    "path": "IMG_6907.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T21:42:52",
-    "location": null,
-    "views": 2069
-  },
-  {
-    "path": "IMG_6908.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T21:51:19",
-    "location": null,
-    "views": 3432
-  },
-  {
-    "path": "IMG_6930.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T08:20:12",
-    "location": null,
-    "views": 526
-  },
-  {
-    "path": "IMG_6931.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T08:20:57",
-    "location": null,
-    "views": 2279
-  },
-  {
-    "path": "IMG_6935.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T08:22:55",
-    "location": null,
-    "views": 1470
-  },
-  {
-    "path": "IMG_6936.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T08:23:11",
-    "location": null,
-    "views": 2077
-  },
-  {
-    "path": "IMG_6967.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T12:27:47",
-    "location": null,
-    "views": 2943
-  },
-  {
-    "path": "IMG_6971 2.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:44:06",
-    "location": null,
-    "views": 3672
-  },
-  {
-    "path": "IMG_6971.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:44:54",
-    "location": null,
-    "views": 3506
-  },
-  {
-    "path": "IMG_6973.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:45:15",
-    "location": null,
-    "views": 1206
-  },
-  {
-    "path": "IMG_6974 2.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:18:34",
-    "location": null,
-    "views": 3826
-  },
-  {
-    "path": "IMG_6974.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:45:34",
-    "location": null,
-    "views": 3971
-  },
-  {
-    "path": "IMG_6981.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:58:46",
-    "location": null,
-    "views": 4643
-  },
-  {
-    "path": "IMG_6982.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:59:04",
-    "location": null,
-    "views": 4907
-  },
-  {
-    "path": "IMG_6983.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:59:24",
-    "location": null,
-    "views": 4851
-  },
-  {
-    "path": "IMG_6984.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:59:41",
-    "location": null,
-    "views": 213
-  },
-  {
-    "path": "IMG_6985.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T16:00:50",
-    "location": null,
-    "views": 1735
-  },
-  {
-    "path": "IMG_7045.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T12:27:27",
-    "location": null,
-    "views": 1672
-  },
-  {
-    "path": "IMG_7139.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-29T07:23:03",
-    "location": null,
-    "views": 1667
-  },
-  {
-    "path": "IMG_7140.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-29T07:26:18",
-    "location": null,
-    "views": 2503
-  },
-  {
-    "path": "IMG_7141.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-29T07:26:40",
-    "location": null,
-    "views": 2353
-  },
-  {
-    "path": "IMG_7142.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-29T07:27:00",
-    "location": null,
-    "views": 2133
-  },
-  {
-    "path": "IMG_7143.JPG",
+    "path": "china/fujian/dayu-mountain-island/IMG_7143.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2025-12-29T07:27:18",
-    "location": null,
-    "views": 4865
+    "location": "Dayu-Mountain-Island, Fujian",
+    "views": 2322
   },
   {
-    "path": "IMG_7186.JPG",
+    "path": "china/fujian/xiawei-island/IMG_7142.JPG",
     "ext": "jpg",
     "type": "image",
-    "updatedAt": "2025-12-29T17:00:19",
-    "location": null,
-    "views": 118
-  },
-  {
-    "path": "IMG_7190.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-29T17:07:48",
-    "location": null,
-    "views": 2337
-  },
-  {
-    "path": "IMG_7269.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-31T13:33:22",
-    "location": null,
-    "views": 2730
-  },
-  {
-    "path": "b05bae9f15520292d8d738ed7e0acf53.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-03T16:36:05",
-    "location": null,
-    "views": 3234
-  },
-  {
-    "path": "b6f722f06add7ec061762fc7e53110e4.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:22:18",
-    "location": null,
-    "views": 3011
-  },
-  {
-    "path": "be7c2e987599c2c61bb5c17d4fec5e32.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:23:57",
-    "location": null,
-    "views": 617
-  },
-  {
-    "path": "c14e3ae0a2ddd064ec71e0ca3a995a7c.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-05T16:52:30",
-    "location": null,
-    "views": 3062
-  },
-  {
-    "path": "c82c4b6c9cc7e88faa95ab821afd7660.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:23:51",
-    "location": null,
-    "views": 902
+    "updatedAt": "2025-12-29T07:27:00",
+    "location": "Xiawei-Island, Fujian",
+    "views": 2430
   },
   {
     "path": "china/fujian/xiawei-island/landscape/福建-下尾岛.jpg",
@@ -446,6 +54,238 @@
     "updatedAt": "2025-12-25T21:02:15",
     "location": "Shenzhen-Meisha, Guangdong",
     "views": 2296
+  },
+  {
+    "path": "china/guangdong/shenzhen/IMG_6931.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T08:20:57",
+    "location": "Shenzhen, Guangdong",
+    "views": 2922
+  },
+  {
+    "path": "china/guangdong/shenzhen/shenzhen-meisha/landscape/IMG_6882.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T21:01:51",
+    "location": "Shenzhen-Meisha, Shenzhen",
+    "views": 1194
+  },
+  {
+    "path": "china/guangdong/shenzhen/shenzhen-meisha/landscape/IMG_6883.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T21:02:06",
+    "location": "Shenzhen-Meisha, Shenzhen",
+    "views": 1329
+  },
+  {
+    "path": "china/guangdong/shenzhen/shenzhen-meisha/landscape/IMG_6884.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T21:02:15",
+    "location": "Shenzhen-Meisha, Shenzhen",
+    "views": 4003
+  },
+  {
+    "path": "china/guangdong/shenzhen/深圳-梅沙滨海.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-11-25T11:44:15",
+    "location": "Shenzhen, Guangdong",
+    "views": 621
+  },
+  {
+    "path": "china/jiangsu/262764c4c58c5349361c36e40c95028b.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:24:59",
+    "location": "Jiangsu, China",
+    "views": 2928
+  },
+  {
+    "path": "china/jiangsu/IMG_6875 2.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T16:35:55",
+    "location": "Jiangsu, China",
+    "views": 944
+  },
+  {
+    "path": "china/jiangsu/IMG_6875.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T16:35:55",
+    "location": "Jiangsu, China",
+    "views": 1148
+  },
+  {
+    "path": "china/jiangsu/IMG_6894.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:17:05",
+    "location": "Jiangsu, China",
+    "views": 803
+  },
+  {
+    "path": "china/jiangsu/IMG_7045.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T12:27:27",
+    "location": "Jiangsu, China",
+    "views": 216
+  },
+  {
+    "path": "china/jiangsu/南京-牛首山.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-29T17:06:22",
+    "location": "Jiangsu, China",
+    "views": 3670
+  },
+  {
+    "path": "china/jiangsu/淀山湖-落日之辉.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:17:05",
+    "location": "Jiangsu, China",
+    "views": 1940
+  },
+  {
+    "path": "china/jilin/1e98e6a4b358ccc58a581f7b25ecea22.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-05T16:51:47",
+    "location": "Jilin, China",
+    "views": 3240
+  },
+  {
+    "path": "china/jilin/8b2ca15e085dbd79b400524ab7284425.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-05T16:51:59",
+    "location": "Jilin, China",
+    "views": 4801
+  },
+  {
+    "path": "china/jilin/IMG_6985.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T16:00:50",
+    "location": "Jilin, China",
+    "views": 1225
+  },
+  {
+    "path": "china/jilin/IMG_7190.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-29T17:07:48",
+    "location": "Jilin, China",
+    "views": 2504
+  },
+  {
+    "path": "china/jilin/吉林-辽源-杨木水库.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-29T17:07:48",
+    "location": "Jilin, China",
+    "views": 3440
+  },
+  {
+    "path": "china/shanghai/5e51461672d9270298ca3bfe9f0f387a.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:23:12",
+    "location": "Shanghai, China",
+    "views": 4428
+  },
+  {
+    "path": "china/shanghai/7209bded32c9e4a210491c1ff47f53de.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:22:05",
+    "location": "Shanghai, China",
+    "views": 3911
+  },
+  {
+    "path": "china/shanghai/7566985ae901cf390533045009079fce.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:22:10",
+    "location": "Shanghai, China",
+    "views": 3603
+  },
+  {
+    "path": "china/shanghai/IMG_6907.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T21:42:52",
+    "location": "Shanghai, China",
+    "views": 1568
+  },
+  {
+    "path": "china/shanghai/IMG_6908.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T21:51:19",
+    "location": "Shanghai, China",
+    "views": 3756
+  },
+  {
+    "path": "china/shanghai/IMG_6967.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T12:27:47",
+    "location": "Shanghai, China",
+    "views": 1314
+  },
+  {
+    "path": "china/shanghai/IMG_7186.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-29T17:00:19",
+    "location": "Shanghai, China",
+    "views": 1505
+  },
+  {
+    "path": "china/shanghai/IMG_7269.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-31T13:33:22",
+    "location": "Shanghai, China",
+    "views": 3834
+  },
+  {
+    "path": "china/shanghai/b05bae9f15520292d8d738ed7e0acf53.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-03T16:36:05",
+    "location": "Shanghai, China",
+    "views": 832
+  },
+  {
+    "path": "china/shanghai/b6f722f06add7ec061762fc7e53110e4.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:22:18",
+    "location": "Shanghai, China",
+    "views": 2602
+  },
+  {
+    "path": "china/shanghai/be7c2e987599c2c61bb5c17d4fec5e32.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:23:57",
+    "location": "Shanghai, China",
+    "views": 4070
+  },
+  {
+    "path": "china/shanghai/c82c4b6c9cc7e88faa95ab821afd7660.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:23:51",
+    "location": "Shanghai, China",
+    "views": 4915
   },
   {
     "path": "china/shanghai/chongming/25918ba41f2fc69ee79f43bfd41c53b8.JPG",
@@ -494,6 +334,14 @@
     "updatedAt": "2026-01-18T15:35:27",
     "location": "Chongming, Shanghai",
     "views": 4452
+  },
+  {
+    "path": "china/shanghai/f8baaa83537e16c57355c611ed8a0047.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:22:01",
+    "location": "Shanghai, China",
+    "views": 2063
   },
   {
     "path": "china/shanghai/huangpu/architecture/01b25cf5e3bcdc15dbec5d6ae59cf195.JPG",
@@ -616,6 +464,206 @@
     "views": 995
   },
   {
+    "path": "china/shanghai/上海-北外滩.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-01T09:34:12",
+    "location": "Shanghai, China",
+    "views": 1902
+  },
+  {
+    "path": "china/shanghai/上海-瑞金宾馆.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:22:54",
+    "location": "Shanghai, China",
+    "views": 2407
+  },
+  {
+    "path": "china/shanghai/上海-航拍.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-05T16:52:35",
+    "location": "Shanghai, China",
+    "views": 3070
+  },
+  {
+    "path": "china/shanghai/桂林公园.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-04T18:23:15",
+    "location": "Shanghai, China",
+    "views": 3712
+  },
+  {
+    "path": "china/sichuan/c14e3ae0a2ddd064ec71e0ca3a995a7c.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-05T16:52:30",
+    "location": "Sichuan, China",
+    "views": 4962
+  },
+  {
+    "path": "china/sichuan/川西-九寨沟.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T16:43:38",
+    "location": "Sichuan, China",
+    "views": 3051
+  },
+  {
+    "path": "china/tianjin/IMG_6931.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T08:20:57",
+    "location": "Tianjin, China",
+    "views": 3051
+  },
+  {
+    "path": "china/tianjin/shenzhen-meisha/landscape/IMG_6882.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T21:01:51",
+    "location": "Shenzhen-Meisha, Tianjin",
+    "views": 3703
+  },
+  {
+    "path": "china/tianjin/shenzhen-meisha/landscape/IMG_6883.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T21:02:06",
+    "location": "Shenzhen-Meisha, Tianjin",
+    "views": 1521
+  },
+  {
+    "path": "china/tianjin/shenzhen-meisha/landscape/IMG_6884.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-25T21:02:15",
+    "location": "Shenzhen-Meisha, Tianjin",
+    "views": 2407
+  },
+  {
+    "path": "china/xinjiang/IMG_6897.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:18:05",
+    "location": "Xinjiang, China",
+    "views": 3379
+  },
+  {
+    "path": "china/xinjiang/IMG_6898.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:18:23",
+    "location": "Xinjiang, China",
+    "views": 3388
+  },
+  {
+    "path": "china/xinjiang/IMG_6900.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:18:50",
+    "location": "Xinjiang, China",
+    "views": 582
+  },
+  {
+    "path": "china/xinjiang/IMG_6901.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:19:07",
+    "location": "Xinjiang, China",
+    "views": 2398
+  },
+  {
+    "path": "china/xinjiang/IMG_6935.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T08:22:55",
+    "location": "Xinjiang, China",
+    "views": 3404
+  },
+  {
+    "path": "china/xinjiang/IMG_6971 2.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:44:06",
+    "location": "Xinjiang, China",
+    "views": 1650
+  },
+  {
+    "path": "china/xinjiang/IMG_6971.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:44:54",
+    "location": "Xinjiang, China",
+    "views": 2876
+  },
+  {
+    "path": "china/xinjiang/IMG_6973.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:45:15",
+    "location": "Xinjiang, China",
+    "views": 314
+  },
+  {
+    "path": "china/xinjiang/IMG_6974 2.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:18:34",
+    "location": "Xinjiang, China",
+    "views": 2215
+  },
+  {
+    "path": "china/xinjiang/IMG_6974.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:45:34",
+    "location": "Xinjiang, China",
+    "views": 517
+  },
+  {
+    "path": "china/xinjiang/IMG_6982.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:59:04",
+    "location": "Xinjiang, China",
+    "views": 3714
+  },
+  {
+    "path": "china/xinjiang/IMG_6983.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:59:24",
+    "location": "Xinjiang, China",
+    "views": 1383
+  },
+  {
+    "path": "china/xinjiang/IMG_7139.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-29T07:23:03",
+    "location": "Xinjiang, China",
+    "views": 3615
+  },
+  {
+    "path": "china/xinjiang/IMG_7140.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-29T07:26:18",
+    "location": "Xinjiang, China",
+    "views": 2314
+  },
+  {
+    "path": "china/xinjiang/IMG_7141.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-29T07:26:40",
+    "location": "Xinjiang, China",
+    "views": 629
+  },
+  {
     "path": "china/xinjiang/guozigou-bridge/drone/新疆-果子沟大桥.JPG",
     "ext": "jpg",
     "type": "image",
@@ -640,6 +688,14 @@
     "views": 4889
   },
   {
+    "path": "china/xinjiang/全景图.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2026-01-01T16:31:19",
+    "location": "Xinjiang, China",
+    "views": 3909
+  },
+  {
     "path": "china/xinjiang/新疆-夏塔.jpg",
     "ext": "jpg",
     "type": "image",
@@ -662,6 +718,14 @@
     "updatedAt": "2025-12-26T16:19:07",
     "location": "Xinjiang, China",
     "views": 2260
+  },
+  {
+    "path": "china/xinjiang/赛里木湖畔.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:18:50",
+    "location": "Xinjiang, China",
+    "views": 2812
   },
   {
     "path": "china/yunnan/xishuangbanna/DSC00031.JPG",
@@ -720,139 +784,59 @@
     "views": 4451
   },
   {
-    "path": "f8baaa83537e16c57355c611ed8a0047.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:22:01",
-    "location": null,
-    "views": 887
-  },
-  {
-    "path": "上海-北外滩.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-01T09:34:12",
-    "location": null,
-    "views": 4996
-  },
-  {
-    "path": "上海-瑞金宾馆.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:22:54",
-    "location": null,
-    "views": 3398
-  },
-  {
-    "path": "上海-航拍.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-05T16:52:35",
-    "location": null,
-    "views": 2810
-  },
-  {
-    "path": "云南-玉龙雪山.jpg",
+    "path": "china/yunnan/云南-玉龙雪山.jpg",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2025-12-29T07:27:53",
-    "location": null,
-    "views": 1742
+    "location": "Yunnan, China",
+    "views": 1486
   },
   {
-    "path": "全景图.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-01T16:31:19",
-    "location": null,
-    "views": 1156
-  },
-  {
-    "path": "南京-牛首山.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-29T17:06:22",
-    "location": null,
-    "views": 641
-  },
-  {
-    "path": "吉林-辽源-杨木水库.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-29T17:07:48",
-    "location": null,
-    "views": 2821
-  },
-  {
-    "path": "嘉定博物馆 2.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-03T18:16:38",
-    "location": null,
-    "views": 3839
-  },
-  {
-    "path": "嘉定博物馆.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-03T18:16:38",
-    "location": null,
-    "views": 2290
-  },
-  {
-    "path": "川西-九寨沟.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-25T16:43:38",
-    "location": null,
-    "views": 4792
-  },
-  {
-    "path": "桂林公园.JPG",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2026-01-04T18:23:15",
-    "location": null,
-    "views": 3316
-  },
-  {
-    "path": "浙江-括苍山云海.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-27T15:59:41",
-    "location": null,
-    "views": 1472
-  },
-  {
-    "path": "淀山湖-落日之辉.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-12-26T16:17:05",
-    "location": null,
-    "views": 3708
-  },
-  {
-    "path": "深圳-梅沙滨海.jpg",
-    "ext": "jpg",
-    "type": "image",
-    "updatedAt": "2025-11-25T11:44:15",
-    "location": null,
-    "views": 1465
-  },
-  {
-    "path": "舟山群岛.jpg",
+    "path": "china/zhejiang/IMG_6896.JPG",
     "ext": "jpg",
     "type": "image",
     "updatedAt": "2025-12-26T16:17:51",
-    "location": null,
-    "views": 658
+    "location": "Zhejiang, China",
+    "views": 1899
   },
   {
-    "path": "赛里木湖畔.jpg",
+    "path": "china/zhejiang/IMG_6936.jpg",
     "ext": "jpg",
     "type": "image",
-    "updatedAt": "2025-12-26T16:18:50",
-    "location": null,
-    "views": 1766
+    "updatedAt": "2025-12-27T08:23:11",
+    "location": "Zhejiang, China",
+    "views": 3006
+  },
+  {
+    "path": "china/zhejiang/IMG_6981.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:58:46",
+    "location": "Zhejiang, China",
+    "views": 3766
+  },
+  {
+    "path": "china/zhejiang/IMG_6984.JPG",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:59:41",
+    "location": "Zhejiang, China",
+    "views": 1517
+  },
+  {
+    "path": "china/zhejiang/浙江-括苍山云海.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-27T15:59:41",
+    "location": "Zhejiang, China",
+    "views": 4187
+  },
+  {
+    "path": "china/zhejiang/舟山群岛.jpg",
+    "ext": "jpg",
+    "type": "image",
+    "updatedAt": "2025-12-26T16:17:51",
+    "location": "Zhejiang, China",
+    "views": 4413
   }
 ]

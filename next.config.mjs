@@ -82,6 +82,12 @@ const nextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  experimental: {
+    outputFileTracingIncludes: {
+      '/blogs': ['./src/content/**/*'],
+      '/blogs/**/*': ['./src/content/**/*'],
+    },
+  },
 };
 
 export async function redirects() {

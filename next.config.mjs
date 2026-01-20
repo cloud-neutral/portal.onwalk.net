@@ -82,11 +82,9 @@ const nextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
-  experimental: {
-    outputFileTracingIncludes: {
-      '/blogs': ['./src/content/**/*'],
-      '/blogs/**/*': ['./src/content/**/*'],
-    },
+  outputFileTracingIncludes: {
+    '/blogs': ['./src/content/**/*'],
+    '/blogs/**/*': ['./src/content/**/*'],
   },
 };
 

@@ -46,17 +46,17 @@ const indexEntries: MetadataRoute.Sitemap = [
     priority: 1.0,
   },
   {
-    url: `${baseUrl}/blogs/`,
+    url: `${baseUrl}/blogs`,
     changeFrequency: 'weekly',
     priority: 0.9,
   },
   {
-    url: `${baseUrl}/images/`,
+    url: `${baseUrl}/images`,
     changeFrequency: 'monthly',
     priority: 0.8,
   },
   {
-    url: `${baseUrl}/videos/`,
+    url: `${baseUrl}/videos`,
     changeFrequency: 'monthly',
     priority: 0.8,
   },

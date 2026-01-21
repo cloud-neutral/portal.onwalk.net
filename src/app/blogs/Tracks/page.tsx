@@ -1,4 +1,6 @@
 
+export const dynamic = 'force-dynamic'
+
 import PostCard from '@/components/PostCard'
 import SiteFooter from '@/components/SiteFooter'
 import SiteHeader from '@/components/SiteHeader'

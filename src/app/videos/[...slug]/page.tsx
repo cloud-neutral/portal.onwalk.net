@@ -10,12 +10,7 @@ type Props = {
     params: Promise<{ slug: string[] }>
 }
 
-export async function generateStaticParams() {
-    const videos = await getPublicVideos()
-    return videos.map((video) => ({
-        slug: video.slug.split('/'),
-    }))
-}
+
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params

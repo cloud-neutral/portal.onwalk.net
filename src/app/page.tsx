@@ -19,7 +19,9 @@ import HomeSectionHeader from '@/components/onwalk/HomeSectionHeader'
 import { getContent, sortContentByDate, filterPostsByLanguage } from '@/lib/content'
 import { getLatestPublicImages, getLatestPublicVideos } from '@/lib/publicMedia'
 
+// Disable all caching to ensure fresh content on every request
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function HomePage() {
   const cookieStore = await cookies()

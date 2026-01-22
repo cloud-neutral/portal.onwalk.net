@@ -206,8 +206,8 @@ export const onwalkCopy: Record<Language, OnwalkCopy> = {
     },
     video: {
       eyebrow: '影像',
-      title: '影像剧场',
-      subtitle: '通过短片补充照片的呼吸与节奏。',
+      title: '静谧与流动',
+      subtitle: '用影像的起伏，唤醒照片沉睡的节奏。',
       empty: '暂无视频',
       pageLabel: '页码',
       prev: '上一页',
@@ -315,8 +315,8 @@ export const onwalkCopy: Record<Language, OnwalkCopy> = {
     },
     video: {
       eyebrow: 'Theater',
-      title: 'Image Theater',
-      subtitle: 'Short films add breath and rhythm to the stills.',
+      title: 'Stillness & Flow',
+      subtitle: 'Awaken the sleeping rhythm of the frame through the undulation of imagery.',
       empty: 'No video yet',
       pageLabel: 'Page',
       prev: 'Previous',

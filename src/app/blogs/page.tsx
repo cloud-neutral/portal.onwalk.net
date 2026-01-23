@@ -13,6 +13,7 @@ import {
   type ContentItem,
 } from "@/lib/content";
 import { BreadcrumbJsonLd } from "@/components/BreadcrumbJsonLd";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 // Enable ISR with revalidation to improve SEO while keeping content fresh
 export const dynamic = "force-static";
@@ -143,7 +144,13 @@ export default async function BlogPage({ searchParams }: PageProps) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <SiteHeader />
-      <main className="mx-auto w-full max-w-7xl px-6 pb-20">
+      <main className="mx-auto w-full max-w-7xl px-6 pb-20 pt-8">
+        <Breadcrumb
+          items={[
+            { name: '首页', path: '/' },
+            { name: '笔记', path: '/blogs' }
+          ]}
+        />
         <BreadcrumbJsonLd
           items={[
             { name: "Home", path: "/" },

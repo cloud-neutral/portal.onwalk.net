@@ -12,6 +12,7 @@ import type { ContentItem } from "@/lib/content";
 import { useOnwalkCopy } from "@/i18n/useOnwalkCopy";
 import { copyToClipboard } from "@/lib/clipboard";
 import MediaDetailModal from "@/components/MediaDetailModal";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 type ImagesGalleryProps = {
   items: ContentItem[];
@@ -138,7 +139,13 @@ export default function ImagesGallery({
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <SiteHeader />
-      <main className="mx-auto w-full max-w-7xl px-6 pb-20">
+      <main className="mx-auto w-full max-w-7xl px-6 pb-20 pt-8">
+        <Breadcrumb
+          items={[
+            { name: '首页', path: '/' },
+            { name: '瞬间', path: '/images' }
+          ]}
+        />
         <PageHeader variant="image" />
 
         {/* Controls */}
@@ -187,8 +194,8 @@ export default function ImagesGallery({
                         : copy.image.copyMarkdown
                     }
                     className={`absolute right-3 top-3 z-10 hidden items-center justify-center rounded-full p-2 text-white backdrop-blur-md transition group-hover:flex ${copiedKey === item.slug
-                        ? "bg-green-500/80 hover:bg-green-600/90"
-                        : "bg-black/50 hover:bg-black/70"
+                      ? "bg-green-500/80 hover:bg-green-600/90"
+                      : "bg-black/50 hover:bg-black/70"
                       }`}
                   >
                     {copiedKey === item.slug ? (
@@ -297,8 +304,8 @@ export default function ImagesGallery({
               onClick={() => setPageIndex(Math.max(0, clampedPageIndex - 1))}
               disabled={!canGoBack}
               className={`rounded-full border px-4 py-1.5 text-sm transition ${!canGoBack
-                  ? "cursor-not-allowed border-slate-200 text-slate-300"
-                  : "border-slate-300 text-slate-600 hover:border-slate-400 hover:text-slate-900"
+                ? "cursor-not-allowed border-slate-200 text-slate-300"
+                : "border-slate-300 text-slate-600 hover:border-slate-400 hover:text-slate-900"
                 }`}
             >
               上一页
@@ -309,8 +316,8 @@ export default function ImagesGallery({
               }
               disabled={!canGoForward}
               className={`rounded-full border px-4 py-1.5 text-sm transition ${!canGoForward
-                  ? "cursor-not-allowed border-slate-200 text-slate-300"
-                  : "border-slate-300 text-slate-600 hover:border-slate-400 hover:text-slate-900"
+                ? "cursor-not-allowed border-slate-200 text-slate-300"
+                : "border-slate-300 text-slate-600 hover:border-slate-400 hover:text-slate-900"
                 }`}
             >
               下一页
@@ -322,8 +329,8 @@ export default function ImagesGallery({
       {/* Toast Notification */}
       <div
         className={`fixed bottom-8 left-1/2 z-50 -translate-x-1/2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm text-slate-900 shadow-lg backdrop-blur transition-all duration-300 ${copiedKey
-            ? "translate-y-0 opacity-100"
-            : "translate-y-4 opacity-0 pointer-events-none"
+          ? "translate-y-0 opacity-100"
+          : "translate-y-4 opacity-0 pointer-events-none"
           }`}
       >
         {copy.image.markdownCopied}

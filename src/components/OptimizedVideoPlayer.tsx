@@ -1,10 +1,7 @@
 "use client";
 
-"use client";
-
 import { useState, useRef, useEffect } from "react";
 import { ContentItem } from "@/lib/content";
-import { VideoJsonLd } from "./VideoJsonLd";
 
 type OptimizedVideoPlayerProps = {
   video: ContentItem;
@@ -57,9 +54,6 @@ export function OptimizedVideoPlayer({
         <source src={video.src} type="video/mp4" />
         您的浏览器不支持视频播放。
       </video>
-
-      {/* SEO JSON-LD */}
-      <VideoJsonLd video={video} fullPath={fullPath} />
 
       {/* Loading overlay */}
       {!isLoaded && (

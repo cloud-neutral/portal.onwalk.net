@@ -59,23 +59,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "video.other",
       videos: video.src
         ? [
-            {
-              url: video.src,
-              width: 1280,
-              height: 720,
-              type: "video/mp4",
-            },
-          ]
+          {
+            url: video.src,
+            width: 1280,
+            height: 720,
+            type: "video/mp4",
+          },
+        ]
         : [],
       images: video.poster
         ? [
-            {
-              url: video.poster,
-              width: 1280,
-              height: 720,
-              alt: title,
-            },
-          ]
+          {
+            url: video.poster,
+            width: 1280,
+            height: 720,
+            alt: title,
+          },
+        ]
         : [],
       url: `https://www.onwalk.net/videos/${fullPath}`,
       siteName: "Onwalk",
@@ -131,20 +131,35 @@ export default async function VideoPage({ params }: Props) {
     "@type": "VideoObject",
     name: videoData.title,
     description: videoData.description,
-    thumbnailUrl: [videoData.thumbnailUrl],
+    thumbnailUrl: [
+      videoData.thumbnailUrl.startsWith("http")
+        ? videoData.thumbnailUrl
+        : `https://www.onwalk.net${videoData.thumbnailUrl}`,
+    ],
     uploadDate: videoData.uploadDate,
     contentUrl: videoData.contentUrl,
-    embedUrl: videoData.embedUrl,
     duration: video.duration || "PT0S",
     interactionStatistic: {
       "@type": "InteractionCounter",
       interactionType: "https://schema.org/WatchAction",
       userInteractionCount: video.views || 0,
     },
+    publisher: {
+      "@type": "Organization",
+      name: "Onwalk",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.onwalk.net/logo.png",
+      },
+    },
   };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <SiteHeader />
 
       <main className="flex-grow w-full max-w-5xl mx-auto px-4 py-8 flex flex-col items-center">

@@ -1,8 +1,9 @@
 import { ImageResponse } from 'next/og'
+import { staticHeroContent } from '@/i18n/onwalk'
 
 export const runtime = 'nodejs'
 
-export const alt = 'Onwalk — Walking with a Camera'
+export const alt = `Onwalk — ${staticHeroContent.titleEn}`
 export const size = {
     width: 1200,
     height: 630,
@@ -55,7 +56,7 @@ export default async function Image() {
                             textAlign: 'center',
                         }}
                     >
-                        View & World
+                        {staticHeroContent.titleEn}
                     </div>
 
                     {/* Tagline */}

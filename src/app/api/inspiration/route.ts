@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import { getImageItems } from '@/app/images/image-data'
+import { getPublicVideos } from '@/lib/video'
 
 export const runtime = 'nodejs'
 
@@ -15,49 +17,67 @@ const THEMES = {
 
 type ThemeKey = keyof typeof THEMES
 
+function shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled
+}
+
 export async function GET() {
     const today = new Date().getDay() as ThemeKey
     const theme = THEMES[today]
-
-    // Check for API Key
     const apiKey = process.env.OPENAI_API_KEY
 
-    if (!apiKey) {
-        // Return mock response based on theme if no API key
-        // This allows the feature to work immediately without configuration
-        return NextResponse.json(getMockContent(today))
-    }
+    // Fetch and randomize media (Server-side)
+    const [allImages, allVideos] = await Promise.all([
+        getImageItems(),
+        getPublicVideos(),
+    ])
 
-    try {
-        const prompt = `Role: You are a minimalist photographer and poet. Task: Create a set of webpage headlines based on the theme: ${theme}. Format: JSON. Requirements: Main Title (CN) 2-4 chars, high-level; Subtitle (CN) 15-25 chars, narrative, two clauses; Main Title (EN) corresponding; Subtitle (EN) poetic translation. Style: Objective, deep, minimalist. JSON Keys: title_cn, sub_cn, title_en, sub_en.`
+    const randomImages = shuffleArray(allImages).slice(0, 5)
+    // Filter videos that have posters for better theatre experience if possible, or just shuffle all
+    const randomVideos = shuffleArray(allVideos).slice(0, 6)
 
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-                model: 'gpt-4o', // or gpt-3.5-turbo
-                messages: [{ role: 'system', content: prompt }],
-                response_format: { type: "json_object" },
-                temperature: 0.8,
-            }),
-        })
+    let content: any = getMockContent(today)
 
-        if (!response.ok) {
-            console.error('OpenAI API Error:', await response.text())
-            return NextResponse.json(getMockContent(today))
+    if (apiKey) {
+        try {
+            const prompt = `Role: You are a minimalist photographer and poet. Task: Create a set of webpage headlines based on the theme: ${theme}. Format: JSON. Requirements: Main Title (CN) 2-4 chars, high-level; Subtitle (CN) 15-25 chars, narrative, two clauses; Main Title (EN) corresponding; Subtitle (EN) poetic translation. Style: Objective, deep, minimalist. JSON Keys: title_cn, sub_cn, title_en, sub_en.`
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o',
+                    messages: [{ role: 'system', content: prompt }],
+                    response_format: { type: "json_object" },
+                    temperature: 0.8,
+                }),
+            })
+
+            if (response.ok) {
+                const data = await response.json()
+                content = JSON.parse(data.choices[0].message.content)
+            } else {
+                console.error('OpenAI API Error:', await response.text())
+            }
+        } catch (error) {
+            console.error('Inspiration API Error:', error)
         }
-
-        const data = await response.json()
-        const content = JSON.parse(data.choices[0].message.content)
-
-        return NextResponse.json(content)
-    } catch (error) {
-        console.error('Inspiration API Error:', error)
-        return NextResponse.json(getMockContent(today))
     }
+
+    // Attach media to the response
+    return NextResponse.json({
+        ...content,
+        images: randomImages,
+        videos: randomVideos
+    })
 }
 
 function getMockContent(day: number) {

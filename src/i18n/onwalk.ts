@@ -326,3 +326,10 @@ export const onwalkCopy: Record<Language, OnwalkCopy> = {
     },
   },
 }
+
+export const staticHeroContent = {
+  title: "观 · 界",
+  subtitle: "万物皆是时间的过客，唯有镜头前的这一瞬，让流动的光影成为了永恒的标本。",
+  titleEn: "Vision & World",
+  subtitleEn: "Capturing the eternal dance of light and shadow, making the transient moment truly immortal."
+};

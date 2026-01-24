@@ -1,12 +1,12 @@
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
-import { onwalkSeoDescription, onwalkSeoTitle } from '@/lib/seo'
+import { onwalkCopy, staticHeroContent } from '@/i18n/onwalk'
+import type { Language } from '@/i18n/language'
 
 export const metadata = {
-  title: 'Onwalk — View & World',
-  description:
-    '万物皆是时间的过客，唯有镜头前的这一瞬，让流动的光影成为了永恒的标本。 Capturing the eternal dance of shadow and light, making the transient moment truly immortal.',
+  title: `Onwalk — ${staticHeroContent.titleEn}`,
+  description: staticHeroContent.subtitleEn,
 }
 
 import ImageCarousel from '@/components/ImageCarousel'
@@ -14,9 +14,9 @@ import MasonryGrid from '@/components/MasonryGrid'
 import SiteFooter from '@/components/SiteFooter'
 import SiteHeader from '@/components/SiteHeader'
 import VideoGrid from '@/components/VideoGrid'
-import HomeHero from '@/components/onwalk/HomeHero'
+import HeroSection from '@/components/HeroSection'
 import HomeSectionHeader from '@/components/onwalk/HomeSectionHeader'
-import { getContent, sortContentByDate, filterPostsByLanguage } from '@/lib/content'
+import { getContent, filterPostsByLanguage } from '@/lib/content'
 import { getLatestPublicImages, getLatestPublicVideos } from '@/lib/publicMedia'
 
 // Enable caching with revalidation
@@ -24,7 +24,8 @@ export const revalidate = 60
 
 export default async function HomePage() {
   const cookieStore = await cookies()
-  const language = cookieStore.get('onwalk.language')?.value || 'zh'
+  const language = (cookieStore.get('onwalk.language')?.value || 'zh') as Language
+  const copy = onwalkCopy[language] || onwalkCopy.zh
 
   const [blogPosts, latestImages, latestVideos] = await Promise.all([
     getContent('blog'),
@@ -37,7 +38,14 @@ export default async function HomePage() {
     <div className="relative min-h-screen bg-background text-text transition-colors duration-300">
       <SiteHeader />
       <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 pb-24">
-        <HomeHero language={language} />
+
+        {/* Dynamic Hero Section */}
+        <HeroSection
+          initialTitle={language === 'en' ? staticHeroContent.titleEn : staticHeroContent.title}
+          initialSubtitle={language === 'en' ? staticHeroContent.subtitleEn : staticHeroContent.subtitle}
+          badge={copy.home.hero.badge}
+          tagline={copy.home.hero.tagline}
+        />
 
         <section className="space-y-6">
           <HomeSectionHeader section="image" />

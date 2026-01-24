@@ -20,7 +20,14 @@ const nextConfig: NextConfig = {
   output: "export",   // 更改为 export 以生成静态文件供 Capacitor 使用
   compress: true,         // Gzip 压缩输出（确保小体积网络传输）
   // 避免开发环境通过非 localhost 访问时的 allowedDevOrigins 警告
-  allowedDevOrigins: ["localhost", "127.0.0.1", "0.0.0.0", "::1", "172.20.10.3"],
+  allowedDevOrigins: [
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
+    "::1",
+    "172.20.10.3",
+    "172.17.4.37",
+  ],
 
   // 配置允许的外部图片域名
   images: {

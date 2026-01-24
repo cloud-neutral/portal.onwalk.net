@@ -3,6 +3,8 @@ import path from "node:path"
 
 const rootDir = process.cwd()
 
+const isAppBuild = process.env.APP_BUILD === 'true'
+
 const nextConfig: NextConfig = {
   logging: {
     fetches: {
@@ -13,11 +15,10 @@ const nextConfig: NextConfig = {
     maxInactiveAge: 60 * 1000,
   },
 
-  cacheComponents: true,
   // ===============================
-  // 🚀 Capacitor App 优化
+  // 🚀 多端构建配置
   // ===============================
-  output: "export",   // 更改为 export 以生成静态文件供 Capacitor 使用
+  output: isAppBuild ? "export" : "standalone",
   compress: true,         // Gzip 压缩输出（确保小体积网络传输）
   // 避免开发环境通过非 localhost 访问时的 allowedDevOrigins 警告
   allowedDevOrigins: [
@@ -26,12 +27,11 @@ const nextConfig: NextConfig = {
     "0.0.0.0",
     "::1",
     "172.20.10.3",
-    "172.17.4.37",
   ],
 
   // 配置允许的外部图片域名
   images: {
-    unoptimized: true, // Capacitor 离线模式需要关闭 Image Optimization
+    unoptimized: isAppBuild, // Capacitor 离线模式需要关闭 Image Optimization
     remotePatterns: [
       {
         protocol: "https",

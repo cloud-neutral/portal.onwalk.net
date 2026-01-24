@@ -10,6 +10,7 @@
     "dev:raw": "next dev --turbo",
     "prebuild": "bash scripts/prebuild.sh",
     "build": "next build",
+    "build:app": "APP_BUILD=true next build",
     "build:static": "npm run prebuild && next build",
     "prod": "bash scripts/prod.sh",
     "start": "node ./scripts/start.js",

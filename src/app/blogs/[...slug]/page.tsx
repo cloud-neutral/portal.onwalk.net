@@ -128,6 +128,10 @@ export async function generateMetadata({
         description: categoryInfo.description,
         images: [`/api/og?type=blog&slug=${encodeURIComponent(slugPath)}`],
       },
+      robots: {
+        index: true,
+        follow: true,
+      },
     };
   }
 
@@ -137,10 +141,6 @@ export async function generateMetadata({
   if (!post) {
     return {
       title: "笔记",
-      robots: {
-        index: false,
-        follow: false,
-      },
     };
   }
 
@@ -171,6 +171,10 @@ export async function generateMetadata({
     other: {
       "article:published_time": post.date || "",
       "article:modified_time": post.date || "",
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }

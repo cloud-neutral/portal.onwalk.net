@@ -28,6 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 card: 'summary_large_image',
                 images: [`/api/og?type=image&slug=${encodeURIComponent(pathStr)}`],
             },
+            robots: {
+                index: true,
+                follow: true,
+            },
         }
     }
 
@@ -40,6 +44,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         twitter: {
             card: 'summary_large_image',
             images: [`/api/og?type=image&slug=${encodeURIComponent(pathStr)}`],
+        },
+        robots: {
+            index: true,
+            follow: true,
         },
     }
 }

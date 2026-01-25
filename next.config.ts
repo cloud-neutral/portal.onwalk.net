@@ -3,6 +3,8 @@ import path from "node:path"
 
 const rootDir = process.cwd()
 
+const isAppBuild = process.env.APP_BUILD === 'true'
+
 const nextConfig: NextConfig = {
   logging: {
     fetches: {
@@ -13,17 +15,23 @@ const nextConfig: NextConfig = {
     maxInactiveAge: 60 * 1000,
   },
 
-  cacheComponents: true,
   // ===============================
-  // 🚀 生产优化 —— 最关键的三行
+  // 🚀 多端构建配置
   // ===============================
-  output: "standalone",   // 让 Next.js 生成可独立运行的最小产物（大幅减小 Docker 镜像）
+  output: isAppBuild ? "export" : "standalone",
   compress: true,         // Gzip 压缩输出（确保小体积网络传输）
   // 避免开发环境通过非 localhost 访问时的 allowedDevOrigins 警告
-  allowedDevOrigins: ["localhost", "127.0.0.1", "0.0.0.0", "::1", "172.20.10.3"],
+  allowedDevOrigins: [
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
+    "::1",
+    "172.20.10.3",
+  ],
 
   // 配置允许的外部图片域名
   images: {
+    unoptimized: isAppBuild, // Capacitor 离线模式需要关闭 Image Optimization
     remotePatterns: [
       {
         protocol: "https",

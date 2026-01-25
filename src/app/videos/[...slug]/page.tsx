@@ -130,10 +130,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: "视频未找到 | Onwalk",
-    robots: {
-      index: false,
-      follow: false,
-    }
   };
 }
 

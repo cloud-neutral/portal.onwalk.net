@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html {...htmlAttributes} className={`${roboto.variable}`}>
+    <html {...htmlAttributes} className={`${roboto.variable}`} suppressHydrationWarning>
       <head>
         {/* Google Fonts & Icons */}
         <link href="https://fonts.googleapis.com" rel="preconnect" />

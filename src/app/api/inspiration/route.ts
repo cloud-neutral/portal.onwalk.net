@@ -2,43 +2,11 @@ import { NextResponse } from 'next/server'
 import { getImageItems } from '@/app/images/image-data'
 import { getPublicVideos } from '@/lib/video'
 import {
-    WEEKLY_THEMES,
-    MONTHLY_THEMES,
-    TIMELESS_THEMES,
     SYSTEM_PROMPT_TEMPLATE,
-    type ThemeDefinition
 } from '@/lib/theme-constants'
+import { getRandomThemeLogic, getRandomMediaSubset } from '@/lib/inspiration-logic'
 
 export const runtime = 'nodejs'
-
-function shuffleArray<T>(array: T[]): T[] {
-    const shuffled = [...array]
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled
-}
-
-function getRandomTheme(): ThemeDefinition {
-    // 30% Weekly, 30% Monthly, 40% Timeless
-    const rand = Math.random()
-
-    if (rand < 0.3) {
-        // Weekly
-        const keys = Object.keys(WEEKLY_THEMES).map(Number)
-        const randomKey = keys[Math.floor(Math.random() * keys.length)]
-        return WEEKLY_THEMES[randomKey]
-    } else if (rand < 0.6) {
-        // Monthly
-        const keys = Object.keys(MONTHLY_THEMES).map(Number)
-        const randomKey = keys[Math.floor(Math.random() * keys.length)]
-        return MONTHLY_THEMES[randomKey]
-    } else {
-        // Timeless
-        return TIMELESS_THEMES[Math.floor(Math.random() * TIMELESS_THEMES.length)]
-    }
-}
 
 export async function GET() {
     // Config: Forces local mode by ignoring API Key for now
@@ -51,13 +19,13 @@ export async function GET() {
         getPublicVideos(),
     ])
 
-    const randomImages = shuffleArray(allImages).slice(0, 5)
+    const randomImages = getRandomMediaSubset(allImages, 5)
     // Filter videos that have posters for better theatre experience if possible, or just shuffle all
-    const randomVideos = shuffleArray(allVideos).slice(0, 6)
+    const randomVideos = getRandomMediaSubset(allVideos, 6)
 
     // 2. Select Theme (Advanced Logic)
     // For this API (triggered by button), we want serendipity (randomness)
-    const selectedTheme = getRandomTheme()
+    const selectedTheme = getRandomThemeLogic()
 
     let content: any = {
         title_cn: selectedTheme.cn,

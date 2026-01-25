@@ -25,8 +25,19 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export default async function HomePage() {
-  const cookieStore = await cookies()
-  const language = (cookieStore.get('onwalk.language')?.value || 'zh') as Language
+  let language: Language = 'zh'
+
+  // Conditionally access cookies only for web builds (SSR)
+  // For App builds (Static Export), cookies() is not available/supported
+  if (process.env.APP_BUILD !== 'true') {
+    try {
+      const cookieStore = await cookies()
+      language = (cookieStore.get('onwalk.language')?.value || 'zh') as Language
+    } catch (e) {
+      // Ignore cookie errors during build/static generation
+    }
+  }
+
   const copy = onwalkCopy[language] || onwalkCopy.zh
 
   const [blogPosts, allImages, allVideos] = await Promise.all([

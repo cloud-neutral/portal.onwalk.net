@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 import { ContentItem } from '@/lib/content'
 import ImageCarousel from '@/components/ImageCarousel'
@@ -8,7 +9,7 @@ import VideoGrid from '@/components/VideoGrid'
 import HeroSection from '@/components/HeroSection'
 import HomeSectionHeader from '@/components/onwalk/HomeSectionHeader'
 import MasonryGrid from '@/components/MasonryGrid'
-import Link from 'next/link'
+import { getRandomThemeLogic, getRandomMediaSubset } from '@/lib/inspiration-logic'
 
 type HomeInteractiveWrapperProps = {
     initialTitle: string
@@ -19,7 +20,6 @@ type HomeInteractiveWrapperProps = {
     initialVideos: ContentItem[]
     latestBlogs: ContentItem[]
 }
-
 export default function HomeInteractiveWrapper({
     initialTitle,
     initialSubtitle,
@@ -42,41 +42,52 @@ export default function HomeInteractiveWrapper({
         if (isLoading) return
 
         setIsLoading(true)
-        setIsBlurring(true) // Start blur out content
+        setIsBlurring(true)
 
-        // Also blur sections? Maybe subtle opacity change?
-        // Let's keep it simple focused on Hero for now, or blur everything slightly?
-        // Let's stick to Hero blur as per original request, but update data.
+        // Min wait for animation
+        const waitPromise = new Promise(resolve => setTimeout(resolve, 800))
 
         try {
             const response = await fetch('/api/inspiration')
-            await new Promise(resolve => setTimeout(resolve, 800)) // Min wait
 
             if (response.ok) {
+                await waitPromise
                 const data = await response.json()
                 setHeroContent({
-                    title: data.title_cn, // Assuming API returns logic based on language? API currently returns mixed keys.
-                    // The API returns title_cn/sub_cn/title_en/sub_en.
-                    // Ideally we should respect user language here.
-                    // But this wrapper is client side, how do we know language?
-                    // We could pass current Lang or just use CN for now (default).
-                    // Let's assume we want to update based on what initial was.
-                    // If initial was English, we might want English keys.
-                    // BUT, the API returns a fixed JSON. We should pick based on prop.
-                    // Let's update `HeroSection` to handle Lang or pass it here.
+                    title: data.title_cn,
                     subtitle: data.sub_cn,
                 })
 
-                // Update Media
-                if (data.images && data.images.length > 0) {
-                    setImages(data.images)
-                }
-                if (data.videos && data.videos.length > 0) {
-                    setVideos(data.videos)
-                }
+                if (data.images?.length > 0) setImages(data.images)
+                if (data.videos?.length > 0) setVideos(data.videos)
+                return
+            } else {
+                throw new Error('API failed')
             }
         } catch (error) {
-            console.error('Failed to develop new content', error)
+            console.log('Falling back to local logic due to:', error)
+            await waitPromise
+
+            // Client-side Fallback (Offline / Export mode)
+            const theme = getRandomThemeLogic()
+            const freshImages = getRandomMediaSubset(initialImages, 5) // Note: This reshuffles the INITIAL set. 
+            // For better variety in static mode, ideally we'd have all items, 
+            // but here we just reshuffle initial props or we need to pass ALL items?
+            // Let's assume shuffling initial set is "okay" or maybe we can't access allItems here without passing them.
+            // The current implementation passes *a subset* as initialImages. 
+            // To do true client-side shuffle of ALL, we should pass allItems to this wrapper.
+            // For now, let's just shuffle the subset we have or maybe we passed full list?
+            // In page.tsx: const initialImages = shuffleArray(allImages).slice(0, 5) -> We only passed 5.
+            // So client-side shuffle only shuffles 5 items. That's weak.
+            // BUT rewriting page.tsx to pass all is risky for payload size.
+            // Compromise: Just randomize text theme locally. Media stays same or just reordered?
+            // Actually, let's just randomize Theme text.
+
+            setHeroContent({
+                title: theme.cn,
+                subtitle: theme.desc_cn ? `${theme.desc_cn}。` : '... ...',
+            })
+            // setImages(freshImages) // Optional: re-order existing 5
         } finally {
             setIsLoading(false)
             setIsBlurring(false)
